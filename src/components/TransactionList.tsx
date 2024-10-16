@@ -22,14 +22,14 @@ interface ChartConfig {
 
 interface TransactionsListProps {
   transactions: Transaction[];
-  categoryConfiguration: CategoryConfig;
+  categoryConfig: CategoryConfig;
   handleDelete: (id: number) => void;
   handleEdit: (id: number, amount: number, category: string) => void; // Nouvelle prop
 }
 
 const TransactionsList: React.FC<TransactionsListProps> = ({
   transactions,
-  categoryConfiguration,
+  categoryConfig,
   handleDelete,
   handleEdit,
 }) => {
@@ -47,7 +47,7 @@ const TransactionsList: React.FC<TransactionsListProps> = ({
       acc[transaction.category] = {
         category: transaction.category,
         amount: 0,
-        fill: categoryConfiguration[transaction.category]?.color || "#000",
+        fill: categoryConfig[transaction.category]?.color || "#000",
       };
     }
     acc[transaction.category].amount += transaction.amount;
@@ -56,10 +56,10 @@ const TransactionsList: React.FC<TransactionsListProps> = ({
 
   const chartDataArray = Object.values(chartData);
 
-  const chartConfig = Object.keys(categoryConfiguration).reduce((acc, key) => {
+  const chartConfig = Object.keys(categoryConfig).reduce((acc, key) => {
     acc[key] = {
       label: key,
-      color: categoryConfiguration[key].color,
+      color: categoryConfig[key].color,
     };
     return acc;
   }, {} as ChartConfig);
@@ -91,7 +91,7 @@ const TransactionsList: React.FC<TransactionsListProps> = ({
   };
 
   return (
-    <div className="flex flex-row-reverse gap-6   max-md:flex max-md:flex-col ">
+    <div className="flex flex-row-reverse gap-6 max-h-[400px]  max-md:flex max-md:flex-col ">
       {/* Section des transactions */}
       <div className="bg-customColor-800 rounded-lg p-10 w-1/2">
         <h2 className="text-xl font-bold mb-4 text-transparent bg-clip-text bg-gradient-to-r from-gray-600 to-gray-100">
@@ -112,8 +112,7 @@ const TransactionsList: React.FC<TransactionsListProps> = ({
               .map((transaction) => {
                 const amountColor =
                   transaction.amount < 0 ? "text-red-700" : "text-emerald-600";
-                const { color, icon } =
-                  categoryConfiguration[transaction.category];
+                const { color, icon } = categoryConfig[transaction.category];
 
                 return (
                   <div
@@ -177,7 +176,7 @@ const TransactionsList: React.FC<TransactionsListProps> = ({
           transaction={transactionToEdit}
           onSubmit={handleEditSubmit}
           onCancel={() => setIsEditModalOpen(false)}
-          categoryConfig={categoryConfiguration}
+          categoryConfig={categoryConfig}
         />
       )}
     </div>

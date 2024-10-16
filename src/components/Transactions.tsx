@@ -13,6 +13,8 @@ import {
   TreePalm,
   Utensils,
 } from "lucide-react";
+import TotalIncome from "./TotalMonthIncome";
+import TotalExpense from "./TotalMonthExpense";
 
 interface Transaction {
   id: number;
@@ -32,32 +34,34 @@ type Category =
   | "Autre";
 
 export default function Transactions() {
-  const categoryConfig: Record<Category, { color: string; icon: JSX.Element }> =
-    {
-      Salaire: { color: "text-white", icon: <Briefcase /> },
-      "Loisirs & vacances": { color: "text-white", icon: <TreePalm /> },
-      "Alimentation & restaurants": {
-        color: "text-white",
-        icon: <Utensils />,
-      },
-      "Achats & Shopping": {
-        color: "text-white",
-        icon: <ShoppingBasket />,
-      },
-      Logement: {
-        color: "text-white",
-        icon: <House />,
-      },
-      Santé: {
-        color: "text-white",
-        icon: <Cross />,
-      },
-      Transports: {
-        color: "text-white",
-        icon: <Bus />,
-      },
-      Autre: { color: "text-white", icon: <Bookmark /> },
-    };
+  const categoryStyleConfig: Record<
+    Category,
+    { color: string; icon: JSX.Element }
+  > = {
+    Salaire: { color: "text-white", icon: <Briefcase /> },
+    "Loisirs & vacances": { color: "text-white", icon: <TreePalm /> },
+    "Alimentation & restaurants": {
+      color: "text-white",
+      icon: <Utensils />,
+    },
+    "Achats & Shopping": {
+      color: "text-white",
+      icon: <ShoppingBasket />,
+    },
+    Logement: {
+      color: "text-white",
+      icon: <House />,
+    },
+    Santé: {
+      color: "text-white",
+      icon: <Cross />,
+    },
+    Transports: {
+      color: "text-white",
+      icon: <Bus />,
+    },
+    Autre: { color: "text-white", icon: <Bookmark /> },
+  };
 
   const [transactions, setTransactions] = useState<Transaction[]>([]);
   const [amount, setAmount] = useState<string>("");
@@ -104,6 +108,10 @@ export default function Transactions() {
     }
   };
 
+  useEffect(() => {
+    fetchTransactions();
+  }, []);
+
   const handleEdit = async (id: number, amount: number, category: string) => {
     const res = await fetch("/api/transactions", {
       method: "PUT",
@@ -119,22 +127,22 @@ export default function Transactions() {
     }
   };
 
-  useEffect(() => {
-    fetchTransactions();
-  }, []);
-
   return (
     <main className="min-h-screen flex flex-col mt-7 text-white">
-      <AddTransactionForm
-        amount={amount}
-        setAmount={setAmount}
-        category={category}
-        setCategory={setCategory}
-        handleSubmit={handleSubmit}
-      />
+      <div className="flex gap-6">
+        <AddTransactionForm
+          amount={amount}
+          setAmount={setAmount}
+          category={category}
+          setCategory={setCategory}
+          handleSubmit={handleSubmit}
+        />
+        <TotalIncome />
+        <TotalExpense />
+      </div>
       <TransactionsList
         transactions={transactions}
-        categoryConfig={categoryConfig}
+        categoryConfig={categoryStyleConfig}
         handleDelete={handleDelete}
         handleEdit={handleEdit}
       />
