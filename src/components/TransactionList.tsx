@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import { Trash, Pencil } from "lucide-react";
 import TransactionChart from "./TransactionChart";
 import ConfirmationModal from "./ConfirmationModal"; // Nouveau composant à créer
+import EditTransactionModal from "./EditTransactionModal"; // Nouveau composant à créer
 
 interface Transaction {
   id: number;
@@ -21,19 +22,24 @@ interface ChartConfig {
 
 interface TransactionsListProps {
   transactions: Transaction[];
-  categoryConfig: CategoryConfig;
+  categoryConfiguration: CategoryConfig;
   handleDelete: (id: number) => void;
+  handleEdit: (id: number, amount: number, category: string) => void; // Nouvelle prop
 }
 
 const TransactionsList: React.FC<TransactionsListProps> = ({
   transactions,
-  categoryConfig,
+  categoryConfiguration,
   handleDelete,
+  handleEdit,
 }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [transactionToDelete, setTransactionToDelete] = useState<number | null>(
     null
   );
+  const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+  const [transactionToEdit, setTransactionToEdit] =
+    useState<Transaction | null>(null);
 
   // Préparer les données pour le graphique
   const chartData = transactions.reduce((acc, transaction) => {
@@ -41,7 +47,7 @@ const TransactionsList: React.FC<TransactionsListProps> = ({
       acc[transaction.category] = {
         category: transaction.category,
         amount: 0,
-        fill: categoryConfig[transaction.category]?.color || "#000",
+        fill: categoryConfiguration[transaction.category]?.color || "#000",
       };
     }
     acc[transaction.category].amount += transaction.amount;
@@ -50,10 +56,10 @@ const TransactionsList: React.FC<TransactionsListProps> = ({
 
   const chartDataArray = Object.values(chartData);
 
-  const chartConfig = Object.keys(categoryConfig).reduce((acc, key) => {
+  const chartConfig = Object.keys(categoryConfiguration).reduce((acc, key) => {
     acc[key] = {
       label: key,
-      color: categoryConfig[key].color,
+      color: categoryConfiguration[key].color,
     };
     return acc;
   }, {} as ChartConfig);
@@ -74,8 +80,18 @@ const TransactionsList: React.FC<TransactionsListProps> = ({
     setIsModalOpen(false);
   };
 
+  const handleEditClick = (transaction: Transaction) => {
+    setTransactionToEdit(transaction);
+    setIsEditModalOpen(true);
+  };
+
+  const handleEditSubmit = (id: number, amount: number, category: string) => {
+    handleEdit(id, amount, category);
+    setIsEditModalOpen(false);
+  };
+
   return (
-    <div className="flex flex-row-reverse gap-6  max-md:flex max-md:flex-col ">
+    <div className="flex flex-row-reverse gap-6   max-md:flex max-md:flex-col ">
       {/* Section des transactions */}
       <div className="bg-customColor-800 rounded-lg p-10 w-1/2">
         <h2 className="text-xl font-bold mb-4 text-transparent bg-clip-text bg-gradient-to-r from-gray-600 to-gray-100">
@@ -96,7 +112,8 @@ const TransactionsList: React.FC<TransactionsListProps> = ({
               .map((transaction) => {
                 const amountColor =
                   transaction.amount < 0 ? "text-red-700" : "text-emerald-600";
-                const { color, icon } = categoryConfig[transaction.category];
+                const { color, icon } =
+                  categoryConfiguration[transaction.category];
 
                 return (
                   <div
@@ -113,15 +130,24 @@ const TransactionsList: React.FC<TransactionsListProps> = ({
                       >
                         {transaction.amount.toFixed(2)}€
                       </span>
-                      <button
-                        onClick={() =>
-                          handleDeleteWithConfirmation(transaction.id)
-                        }
-                        className="text-customColor-300 hover:bg-red-500 hover:text-white p-2 rounded transition duration-300"
-                        title="Supprimer la transaction"
-                      >
-                        <Trash className="w-5 h-5" />
-                      </button>
+                      <div className="flex items-center">
+                        <button
+                          onClick={() => handleEditClick(transaction)}
+                          className="text-customColor-300 hover:bg-blue-500 hover:text-white p-2 rounded transition duration-300 mr-2"
+                          title="Modifier la transaction"
+                        >
+                          <Pencil className="w-5 h-5" />
+                        </button>
+                        <button
+                          onClick={() =>
+                            handleDeleteWithConfirmation(transaction.id)
+                          }
+                          className="text-customColor-300 hover:bg-red-500 hover:text-white p-2 rounded transition duration-300"
+                          title="Supprimer la transaction"
+                        >
+                          <Trash className="w-5 h-5" />
+                        </button>
+                      </div>
                     </div>
                   </div>
                 );
@@ -143,6 +169,15 @@ const TransactionsList: React.FC<TransactionsListProps> = ({
           onConfirm={confirmDelete}
           onCancel={cancelDelete}
           message="Êtes-vous sûr de vouloir supprimer cette transaction ?"
+        />
+      )}
+
+      {isEditModalOpen && transactionToEdit && (
+        <EditTransactionModal
+          transaction={transactionToEdit}
+          onSubmit={handleEditSubmit}
+          onCancel={() => setIsEditModalOpen(false)}
+          categoryConfig={categoryConfiguration}
         />
       )}
     </div>

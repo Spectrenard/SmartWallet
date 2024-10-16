@@ -34,12 +34,12 @@ const AddTransactionForm: React.FC<AddTransactionFormProps> = ({
           onChange={(e) => setAmount(e.target.value)}
           placeholder="Montant"
           required
-          className="p-2 rounded bg-customColor-700 text-gray-500 flex-1 placeholder-gray-400 placeholder-opacity-100"
+          className="p-2 rounded bg-customColor-700 text-gray-500 flex-1 placeholder-gray-400 placeholder-opacity-100 focus:outline-none focus:ring-2 focus:ring-customColor-500"
         />
         <select
           value={category}
           onChange={(e) => setCategory(e.target.value)}
-          className="p-2 rounded bg-customColor-700 text-gray-500 flex-1 md:max-w-xs"
+          className="p-2 rounded bg-customColor-700 text-gray-500 flex-1 md:max-w-xs focus:outline-none focus:ring-2 focus:ring-customColor-500"
         >
           <option
             className="bg-customcolor-700 text-gray-300"
@@ -59,7 +59,7 @@ const AddTransactionForm: React.FC<AddTransactionFormProps> = ({
           <option value="Transports">Transports</option>
           <option value="Autre">Autre</option>
         </select>
-        <Btn />
+        <Btn text="Ajouter" />
       </form>
     </div>
   );

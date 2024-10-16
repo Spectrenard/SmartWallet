@@ -1,7 +1,15 @@
 "use client";
 
 import React from "react";
-import { Bar, BarChart, XAxis, YAxis, Cell } from "recharts";
+import {
+  Bar,
+  BarChart,
+  XAxis,
+  YAxis,
+  Cell,
+  LabelList,
+  ResponsiveContainer,
+} from "recharts";
 import {
   ChartConfig,
   ChartContainer,
@@ -20,68 +28,73 @@ interface TransactionChartProps {
 }
 
 const getColorByCategory = (category: string) => {
-  switch (category) {
-    case "Salaire":
-      return "#16A34A"; // Vert plus foncé
-    case "Loisirs & vacances":
-      return "#EAB308"; // Jaune plus foncé
-    case "Alimentation & restaurants":
-      return "#F97316"; // Orange plus foncé
-    case "Achats & Shopping":
-      return "#9333EA"; // Violet plus foncé
-    case "Logement":
-      return "#0EA5E9"; // Bleu ciel plus foncé
-    case "Santé":
-      return "#F87171"; // Rouge plus foncé
-    case "Transports":
-      return "#4F46E5"; // Indigo plus foncé
-    case "Autre":
-      return "#6B7280"; // Gris plus foncé
-    default:
-      return "#F59E0B"; // Couleur par défaut plus foncée
-  }
+  const colors = {
+    Salaire: "#22c55e",
+    "Loisirs & vacances": "#eab308",
+    "Alimentation & restaurants": "#f97316",
+    "Achats & Shopping": "#a855f7",
+    Logement: "#0ea5e9",
+    Santé: "#ef4444",
+    Transports: "#6366f1",
+    Autre: "#94a3b8",
+  };
+  return colors[category as keyof typeof colors] || "#f59e0b";
 };
 
 const TransactionChart: React.FC<TransactionChartProps> = ({
   chartDataArray,
   chartConfig,
 }) => {
+  const filteredData = chartDataArray
+    .filter((entry) => entry.amount < 0)
+    .map((entry) => ({
+      ...entry,
+      amount: Math.abs(entry.amount),
+    }))
+    .sort((a, b) => b.amount - a.amount);
+
   return (
-    <div className=" bg-customColor-800 text-white rounded-lg p-10">
+    <div className="bg-customColor-800 text-white rounded-lg p-10">
       <h3 className="text-xl font-bold mb-4 text-transparent bg-clip-text bg-gradient-to-r from-gray-600 to-gray-100">
-        Graphique des Transactions
+        Graphique des Dépenses
       </h3>
       <ChartContainer config={chartConfig}>
-        <BarChart
-          width={500}
-          height={300}
-          data={chartDataArray}
-          layout="vertical"
-          margin={{ left: 50 }}
-        >
-          <YAxis
-            dataKey="category"
-            type="category"
-            tickLine={false}
-            tickMargin={10}
-            axisLine={false}
-            style={{ fontSize: "12px", color: "#fff" }}
-            width={50}
-          />
-          <XAxis dataKey="amount" type="number" hide />
-          <ChartTooltip
-            cursor={false}
-            content={<ChartTooltipContent hideLabel />}
-          />
-          <Bar dataKey="amount" layout="vertical" radius={5}>
-            {chartDataArray.map((entry, index) => (
-              <Cell
-                key={`cell-${index}`}
-                fill={getColorByCategory(entry.category)}
+        <ResponsiveContainer width="100%" height={400}>
+          <BarChart
+            data={filteredData}
+            layout="vertical"
+            margin={{ top: 20, right: 30, left: 50, bottom: 5 }}
+          >
+            <YAxis
+              dataKey="category"
+              type="category"
+              tickLine={false}
+              tickMargin={10}
+              axisLine={false}
+              style={{ fontSize: "12px", fill: "#ffffff" }}
+              width={120}
+            />
+            <XAxis type="number" hide={true} />
+            <ChartTooltip
+              cursor={false}
+              content={<ChartTooltipContent hideLabel />}
+            />
+            <Bar dataKey="amount" layout="vertical" radius={5}>
+              {filteredData.map((entry, index) => (
+                <Cell
+                  key={`cell-${index}`}
+                  fill={getColorByCategory(entry.category)}
+                />
+              ))}
+              <LabelList
+                dataKey="amount"
+                position="right"
+                formatter={(value: number) => `${value} €`}
+                style={{ fontSize: "12px" }}
               />
-            ))}
-          </Bar>
-        </BarChart>
+            </Bar>
+          </BarChart>
+        </ResponsiveContainer>
       </ChartContainer>
     </div>
   );

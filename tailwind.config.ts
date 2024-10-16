@@ -9,6 +9,10 @@ const config: Config = {
   ],
   theme: {
     extend: {
+      backgroundImage: {
+        "gradient-custom":
+          "linear-gradient(to right, #16A34A, #3BBF7B, #7BE3A4)",
+      },
       animation: {
         shimmer: "shimmer 2s linear infinite",
       },

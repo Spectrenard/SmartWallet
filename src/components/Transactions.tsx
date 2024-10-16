@@ -104,6 +104,21 @@ export default function Transactions() {
     }
   };
 
+  const handleEdit = async (id: number, amount: number, category: string) => {
+    const res = await fetch("/api/transactions", {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ id, amount, category }),
+    });
+    if (res.ok) {
+      fetchTransactions();
+    } else {
+      console.error("Erreur lors de la modification de la transaction");
+    }
+  };
+
   useEffect(() => {
     fetchTransactions();
   }, []);
@@ -121,6 +136,7 @@ export default function Transactions() {
         transactions={transactions}
         categoryConfig={categoryConfig}
         handleDelete={handleDelete}
+        handleEdit={handleEdit}
       />
     </main>
   );
