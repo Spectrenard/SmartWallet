@@ -41,7 +41,6 @@ export default function Monthly({ transactions, onSelectMonth }: MonthlyProps) {
         className="bg-customColor-700 text-gray-600 px-5 py-2 rounded-xl focus:ring-0 outline-none"
         onChange={handleMonthChange}
       >
-        <option value="">Sélectionnez un mois</option>
         {availableMonths.map((month) => (
           <option key={month} value={month}>
             {month}
