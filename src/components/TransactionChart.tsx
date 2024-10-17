@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useState } from "react";
 import {
   Bar,
   BarChart,
@@ -16,6 +16,7 @@ import {
   ChartTooltip,
   ChartTooltipContent,
 } from "@/components/ui/chart";
+import Monthly from "@/components/MonthlyView";
 
 interface ChartData {
   category: string;
@@ -25,6 +26,7 @@ interface ChartData {
 interface TransactionChartProps {
   chartDataArray: ChartData[];
   chartConfig: ChartConfig;
+  transactions: Transaction[];
 }
 
 const getColorByCategory = (category: string) => {
@@ -44,7 +46,16 @@ const getColorByCategory = (category: string) => {
 const TransactionChart: React.FC<TransactionChartProps> = ({
   chartDataArray,
   chartConfig,
+  transactions,
 }) => {
+  const [selectedMonth, setSelectedMonth] = useState<string | null>(null);
+
+  const handleMonthSelect = (month: string) => {
+    setSelectedMonth(month);
+    // Ici, vous pouvez filtrer les données du graphique en fonction du mois sélectionné
+    // et mettre à jour chartDataArray si nécessaire
+  };
+
   const filteredData = chartDataArray
     .filter((entry) => entry.amount < 0)
     .map((entry) => ({
@@ -55,9 +66,15 @@ const TransactionChart: React.FC<TransactionChartProps> = ({
 
   return (
     <div className="bg-customColor-800 text-white rounded-lg p-10">
-      <h3 className="text-xl font-bold mb-4 text-transparent bg-clip-text bg-gradient-to-r from-gray-600 to-gray-100">
-        Graphique des Dépenses
-      </h3>
+      <div className="flex justify-between">
+        <h3 className="text-xl font-bold mb-4 text-transparent bg-clip-text bg-gradient-to-r from-gray-600 to-gray-100">
+          Graphique des Dépenses
+        </h3>
+        <Monthly
+          transactions={transactions}
+          onSelectMonth={handleMonthSelect}
+        />
+      </div>
       <ChartContainer config={chartConfig}>
         <ResponsiveContainer width="100%" height={400}>
           <BarChart

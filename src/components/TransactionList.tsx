@@ -162,6 +162,7 @@ const TransactionsList: React.FC<TransactionsListProps> = ({
         <TransactionChart
           chartDataArray={chartDataArray}
           chartConfig={chartConfig}
+          transactions={transactions}
         />
       </div>
 
