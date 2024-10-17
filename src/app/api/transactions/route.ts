@@ -58,9 +58,6 @@ export async function POST(req: NextRequest) {
 }
 export async function GET(req: NextRequest) {
   const token = req.cookies.get("token")?.value;
-  const url = new URL(req.url);
-  const month = url.searchParams.get("month");
-  const year = url.searchParams.get("year");
 
   if (!token) {
     return NextResponse.json(
@@ -70,25 +67,16 @@ export async function GET(req: NextRequest) {
   }
 
   try {
+    // Décoder le token pour obtenir le userId
     const { payload } = await jwtVerify(
       token,
       new TextEncoder().encode(process.env.JWT_SECRET || "super_secret_key_123")
     );
-    const userId = Number(payload.userId);
+    const userId = Number(payload.userId); // Assurez-vous que userId est un nombre
 
-    let whereClause: any = { userId };
-    if (month && year) {
-      const startDate = new Date(parseInt(year), parseInt(month) - 1, 1);
-      const endDate = new Date(parseInt(year), parseInt(month), 0);
-      whereClause.createdAt = {
-        gte: startDate,
-        lte: endDate,
-      };
-    }
-
+    // Récupérer les transactions pour cet utilisateur
     const transactions = await prisma.transaction.findMany({
-      where: whereClause,
-      orderBy: { createdAt: "desc" },
+      where: { userId },
     });
 
     return NextResponse.json(transactions);

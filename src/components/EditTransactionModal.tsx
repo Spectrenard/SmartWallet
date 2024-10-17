@@ -7,13 +7,16 @@ type Transaction = {
   category: string;
 };
 
-type CategoryConfig = Record<string, string>;
+type CategoryConfigEdit = Record<
+  string,
+  { color: string; icon: React.ReactNode }
+>;
 
 interface EditTransactionModalProps {
   transaction: Transaction;
   onSubmit: (id: number, amount: number, category: string) => void;
   onCancel: () => void;
-  categoryConfig: CategoryConfig;
+  categoryConfig: CategoryConfigEdit;
 }
 
 const EditTransactionModal: React.FC<EditTransactionModalProps> = ({

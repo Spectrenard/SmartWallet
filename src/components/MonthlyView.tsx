@@ -1,35 +1,44 @@
 import React, { useState, useEffect } from "react";
 
 // Définition du type Transaction
-interface Transaction {
+interface TransactionMonth {
   id: string;
   amount: number;
   description: string;
-  createdAt: string; // Assurez-vous que c'est bien une chaîne de caractères représentant une date
-  // Ajoutez d'autres propriétés si nécessaire
+  createdAt: string;
 }
 
 interface MonthlyProps {
-  transactions: Transaction[];
+  transactions: TransactionMonth[];
   onSelectMonth: (month: string) => void;
 }
 
 export default function Monthly({ transactions, onSelectMonth }: MonthlyProps) {
   const [availableMonths, setAvailableMonths] = useState<string[]>([]);
+  const [selectedMonth, setSelectedMonth] = useState<string>("");
 
   useEffect(() => {
     const months = extractUniqueMonths(transactions);
     setAvailableMonths(months);
-  }, [transactions]);
+
+    // Sélectionner automatiquement le mois courant
+    const currentMonth = new Date().toISOString().slice(0, 7);
+    if (months.includes(currentMonth)) {
+      setSelectedMonth(currentMonth);
+      onSelectMonth(currentMonth);
+    }
+  }, [transactions, onSelectMonth]);
 
   const handleMonthChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
-    onSelectMonth(event.target.value);
+    const newMonth = event.target.value;
+    setSelectedMonth(newMonth);
+    onSelectMonth(newMonth);
   };
 
   return (
     <div>
       <select
-        className="bg-customColor-700 text-gray-600 px-5 py-2 rounded-xl"
+        className="bg-customColor-700 text-gray-600 px-5 py-2 rounded-xl focus:ring-0 outline-none"
         onChange={handleMonthChange}
       >
         <option value="">Sélectionnez un mois</option>
@@ -43,7 +52,7 @@ export default function Monthly({ transactions, onSelectMonth }: MonthlyProps) {
   );
 }
 
-function extractUniqueMonths(transactions: Transaction[]): string[] {
+function extractUniqueMonths(transactions: TransactionMonth[]): string[] {
   const months = transactions.map((transaction) => {
     const date = new Date(transaction.createdAt);
     return `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(

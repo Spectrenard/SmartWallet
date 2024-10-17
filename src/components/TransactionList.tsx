@@ -13,7 +13,7 @@ interface Transaction {
 }
 
 interface CategoryConfig {
-  [key: string]: { color: string; icon: JSX.Element };
+  [key: string]: { color: string; icon: React.ReactNode };
 }
 
 interface ChartConfig {
@@ -24,7 +24,7 @@ interface TransactionsListProps {
   transactions: Transaction[];
   categoryConfig: CategoryConfig;
   handleDelete: (id: number) => void;
-  handleEdit: (id: number, amount: number, category: string) => void; // Nouvelle prop
+  handleEdit: (id: number, amount: number, category: string) => void;
 }
 
 const TransactionsList: React.FC<TransactionsListProps> = ({
@@ -89,6 +89,13 @@ const TransactionsList: React.FC<TransactionsListProps> = ({
     handleEdit(id, amount, category);
     setIsEditModalOpen(false);
   };
+
+  const chartTransactions: TransactionChart[] = transactions.map(
+    (transaction) => ({
+      ...transaction,
+      id: transaction.id.toString(),
+    })
+  );
 
   return (
     <div className="flex flex-row-reverse gap-6   max-md:flex max-md:flex-col ">
@@ -162,7 +169,7 @@ const TransactionsList: React.FC<TransactionsListProps> = ({
         <TransactionChart
           chartDataArray={chartDataArray}
           chartConfig={chartConfig}
-          transactions={transactions}
+          transactions={chartTransactions}
         />
       </div>
 

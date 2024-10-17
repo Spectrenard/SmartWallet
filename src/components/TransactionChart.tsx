@@ -23,10 +23,21 @@ interface ChartData {
   amount: number;
 }
 
+interface TransactionChart {
+  id: string;
+  amount: number;
+  category: string;
+  createdAt: string;
+}
+
+interface TransactionMonth extends TransactionChart {
+  description: string;
+}
+
 interface TransactionChartProps {
   chartDataArray: ChartData[];
   chartConfig: ChartConfig;
-  transactions: Transaction[];
+  transactions: TransactionChart[];
 }
 
 const getColorByCategory = (category: string) => {
@@ -64,6 +75,14 @@ const TransactionChart: React.FC<TransactionChartProps> = ({
     }))
     .sort((a, b) => b.amount - a.amount);
 
+  // Transformez les transactions pour inclure une description
+  const transactionsWithDescription: TransactionMonth[] = transactions.map(
+    (transaction) => ({
+      ...transaction,
+      description: `Transaction ${transaction.id}`, // Ou toute autre logique pour générer une description
+    })
+  );
+
   return (
     <div className="bg-customColor-800 text-white rounded-lg p-10">
       <div className="flex justify-between">
@@ -71,7 +90,7 @@ const TransactionChart: React.FC<TransactionChartProps> = ({
           Graphique des Dépenses
         </h3>
         <Monthly
-          transactions={transactions}
+          transactions={transactionsWithDescription}
           onSelectMonth={handleMonthSelect}
         />
       </div>
