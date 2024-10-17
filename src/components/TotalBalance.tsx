@@ -33,7 +33,7 @@ const TotalBalance: React.FC = () => {
   );
 
   return (
-    <div className="bg-emerald-700 rounded-lg p-6 mb-10 max-w-sm w-full  shadow-lg">
+    <div className="bg-emerald-700 rounded-lg p-6 mb-10 w-full  shadow-lg">
       <h2 className="text-md font-light text-gray-300">Solde total</h2>
       <div className="mt-4">
         <p className="text-3xl font-bold text-white">

@@ -63,7 +63,7 @@ const TransactionChart: React.FC<TransactionChartProps> = ({
           <BarChart
             data={filteredData}
             layout="vertical"
-            margin={{ top: 20, right: 30, left: 50, bottom: 5 }}
+            margin={{ top: 20, right: 30, bottom: 5 }}
           >
             <YAxis
               dataKey="category"

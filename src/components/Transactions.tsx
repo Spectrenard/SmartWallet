@@ -13,8 +13,6 @@ import {
   TreePalm,
   Utensils,
 } from "lucide-react";
-import TotalIncome from "./TotalMonthIncome";
-import TotalExpense from "./TotalMonthExpense";
 
 interface Transaction {
   id: number;
@@ -129,7 +127,7 @@ export default function Transactions() {
 
   return (
     <main className="min-h-screen flex flex-col mt-7 text-white">
-      <div className="flex gap-6">
+      <div className="max-w-xl">
         <AddTransactionForm
           amount={amount}
           setAmount={setAmount}
@@ -137,9 +135,8 @@ export default function Transactions() {
           setCategory={setCategory}
           handleSubmit={handleSubmit}
         />
-        <TotalIncome />
-        <TotalExpense />
       </div>
+
       <TransactionsList
         transactions={transactions}
         categoryConfig={categoryStyleConfig}

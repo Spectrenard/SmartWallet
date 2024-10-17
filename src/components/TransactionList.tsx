@@ -91,13 +91,13 @@ const TransactionsList: React.FC<TransactionsListProps> = ({
   };
 
   return (
-    <div className="flex flex-row-reverse gap-6 max-h-[400px]  max-md:flex max-md:flex-col ">
+    <div className="flex flex-row-reverse gap-6   max-md:flex max-md:flex-col ">
       {/* Section des transactions */}
       <div className="bg-customColor-800 rounded-lg p-10 w-1/2">
         <h2 className="text-xl font-bold mb-4 text-transparent bg-clip-text bg-gradient-to-r from-gray-600 to-gray-100">
           Aperçu
         </h2>
-        <div className="max-h-[400px] overflow-y-auto">
+        <div className="max-h-[400px] overflow-y-auto max-lg:max-h-[285px]">
           {transactions.length === 0 ? (
             <p className="text-center text-gray-400">
               Aucune transaction trouvée.
@@ -121,11 +121,13 @@ const TransactionsList: React.FC<TransactionsListProps> = ({
                   >
                     <div className="flex items-center w-full">
                       {icon && <span className={`${color} mr-2`}>{icon}</span>}
-                      <span className={`font-normal text-lg ${color} flex-1`}>
+                      <span
+                        className={`font-normal text-lg lg:text-sm ${color} flex-1`}
+                      >
                         {transaction.category}
                       </span>
                       <span
-                        className={`text-xl ${amountColor} text-center w-2/4`}
+                        className={`text-xl ${amountColor} text-center w-2/4 lg:text-lg`}
                       >
                         {transaction.amount.toFixed(2)}€
                       </span>
