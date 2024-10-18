@@ -1,18 +1,7 @@
 "use client";
 import { useEffect, useState } from "react";
-import AddTransactionForm from "./AddTransactionForm"; // Importer le composant
-import TransactionsMain from "../components/TransactionMain"; // Importer le composant
-
-import {
-  Bookmark,
-  Briefcase,
-  Bus,
-  Cross,
-  House,
-  ShoppingBasket,
-  TreePalm,
-  Utensils,
-} from "lucide-react";
+import AddTransactionForm from "./AddTransactionForm";
+import TransactionsMain from "../components/TransactionMain";
 
 interface Transaction {
   id: number;
@@ -36,29 +25,29 @@ export default function Transactions() {
     Category,
     { color: string; icon: JSX.Element }
   > = {
-    Salaire: { color: "text-white", icon: <Briefcase /> },
-    "Loisirs & vacances": { color: "text-white", icon: <TreePalm /> },
+    Salaire: { color: "text-white", icon: <span>💼</span> },
+    "Loisirs & vacances": { color: "text-white", icon: <span>🏝️</span> },
     "Alimentation & restaurants": {
       color: "text-white",
-      icon: <Utensils />,
+      icon: <span>🍽️</span>,
     },
     "Achats & Shopping": {
       color: "text-white",
-      icon: <ShoppingBasket />,
+      icon: <span>🛍️</span>,
     },
     Logement: {
       color: "text-white",
-      icon: <House />,
+      icon: <span>🏠</span>,
     },
     Santé: {
       color: "text-white",
-      icon: <Cross />,
+      icon: <span>⚕️</span>,
     },
     Transports: {
       color: "text-white",
-      icon: <Bus />,
+      icon: <span>🚌</span>,
     },
-    Autre: { color: "text-white", icon: <Bookmark /> },
+    Autre: { color: "text-white", icon: <span>🔖</span> },
   };
 
   const [transactions, setTransactions] = useState<Transaction[]>([]);

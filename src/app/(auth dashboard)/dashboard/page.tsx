@@ -11,6 +11,7 @@ export default function Home() {
         <TotalIncome />
         <TotalMonthExpense />
       </div>
+      <div></div>
     </main>
   );
 }
