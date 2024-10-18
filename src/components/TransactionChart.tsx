@@ -16,7 +16,6 @@ import {
   ChartTooltip,
   ChartTooltipContent,
 } from "@/components/ui/chart";
-import Monthly from "@/components/MonthlyView";
 
 interface ChartData {
   category: string;
@@ -89,10 +88,6 @@ const TransactionChart: React.FC<TransactionChartProps> = ({
         <h3 className="text-xl font-bold mb-4 text-transparent bg-clip-text bg-gradient-to-r from-gray-600 to-gray-100">
           Graphique des Dépenses
         </h3>
-        <Monthly
-          transactions={transactionsWithDescription}
-          onSelectMonth={handleMonthSelect}
-        />
       </div>
       <ChartContainer config={chartConfig}>
         <ResponsiveContainer width="100%" height={400}>

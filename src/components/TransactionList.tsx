@@ -1,4 +1,3 @@
-// TransactionsList.tsx
 import React, { useState } from "react";
 import { Trash, Pencil } from "lucide-react";
 import TransactionChart from "./TransactionChart";
@@ -41,8 +40,21 @@ const TransactionsList: React.FC<TransactionsListProps> = ({
   const [transactionToEdit, setTransactionToEdit] =
     useState<Transaction | null>(null);
 
+  // Obtenir le mois et l'année actuels
+  const currentMonth = new Date().getMonth(); // Mois actuel (0 pour janvier, 11 pour décembre)
+  const currentYear = new Date().getFullYear(); // Année actuelle
+
+  // Filtrer les transactions du mois en cours
+  const filteredTransactions = transactions.filter((transaction) => {
+    const transactionDate = new Date(transaction.createdAt);
+    return (
+      transactionDate.getMonth() === currentMonth &&
+      transactionDate.getFullYear() === currentYear
+    );
+  });
+
   // Préparer les données pour le graphique
-  const chartData = transactions.reduce((acc, transaction) => {
+  const chartData = filteredTransactions.reduce((acc, transaction) => {
     if (!acc[transaction.category]) {
       acc[transaction.category] = {
         category: transaction.category,
@@ -90,7 +102,7 @@ const TransactionsList: React.FC<TransactionsListProps> = ({
     setIsEditModalOpen(false);
   };
 
-  const chartTransactions: TransactionChart[] = transactions.map(
+  const chartTransactions: TransactionChart[] = filteredTransactions.map(
     (transaction) => ({
       ...transaction,
       id: transaction.id.toString(),
@@ -98,19 +110,19 @@ const TransactionsList: React.FC<TransactionsListProps> = ({
   );
 
   return (
-    <div className="flex flex-row-reverse gap-6   max-md:flex max-md:flex-col ">
+    <div className="flex flex-row-reverse gap-6 max-md:flex max-md:flex-col">
       {/* Section des transactions */}
       <div className="bg-customColor-800 rounded-lg p-10 w-1/2">
         <h2 className="text-xl font-bold mb-4 text-transparent bg-clip-text bg-gradient-to-r from-gray-600 to-gray-100">
           Aperçu
         </h2>
         <div className="max-h-[400px] overflow-y-auto max-lg:max-h-[285px]">
-          {transactions.length === 0 ? (
+          {filteredTransactions.length === 0 ? (
             <p className="text-center text-gray-400">
-              Aucune transaction trouvée.
+              Aucune transaction trouvée pour le mois actuel.
             </p>
           ) : (
-            transactions
+            filteredTransactions
               .sort(
                 (a, b) =>
                   new Date(b.createdAt).getTime() -
@@ -173,6 +185,7 @@ const TransactionsList: React.FC<TransactionsListProps> = ({
         />
       </div>
 
+      {/* Modals */}
       {isModalOpen && (
         <ConfirmationModal
           onConfirm={confirmDelete}

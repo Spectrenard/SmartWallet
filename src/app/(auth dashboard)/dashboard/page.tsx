@@ -1,5 +1,5 @@
 import TotalBalance from "@/components/TotalBalance";
-import TotalExpense from "@/components/TotalMonthExpense";
+import TotalMonthExpense from "@/components/TotalMonthExpense";
 import TotalIncome from "@/components/TotalMonthIncome";
 
 export default function Home() {
@@ -9,7 +9,7 @@ export default function Home() {
       <div className="flex gap-4">
         <TotalBalance />
         <TotalIncome />
-        <TotalExpense />
+        <TotalMonthExpense />
       </div>
     </main>
   );
