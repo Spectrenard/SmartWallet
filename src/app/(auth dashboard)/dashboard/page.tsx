@@ -1,6 +1,7 @@
 import TotalBalance from "@/components/TotalBalance";
 import TotalMonthExpense from "@/components/TotalMonthExpense";
 import TotalIncome from "@/components/TotalMonthIncome";
+import { DashboardChart } from "@/components/ui/LineChart";
 
 export default function Home() {
   return (
@@ -11,7 +12,9 @@ export default function Home() {
         <TotalIncome />
         <TotalMonthExpense />
       </div>
-      <div></div>
+      <div>
+        <DashboardChart />
+      </div>
     </main>
   );
 }
