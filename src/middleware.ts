@@ -1,7 +1,12 @@
 import { NextRequest, NextResponse } from "next/server";
 import { jwtVerify } from "jose";
 
-const protectedRoutes = ["/dashboard", "/transactions"];
+const protectedRoutes = [
+  "/dashboard",
+  "/transactions",
+  "/budgets",
+  "/abonnements",
+];
 
 export async function middleware(req: NextRequest) {
   const token = req.cookies.get("token")?.value;
@@ -32,5 +37,10 @@ export async function middleware(req: NextRequest) {
 }
 
 export const config = {
-  matcher: ["/dashboard/:path*", "/transactions/:path*"],
+  matcher: [
+    "/dashboard/:path*",
+    "/transactions/:path*",
+    "/budgets/:path*",
+    "/abonnements/:path*",
+  ],
 };
