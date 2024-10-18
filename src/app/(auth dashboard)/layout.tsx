@@ -1,4 +1,4 @@
-import { Sidebar } from "@/components/dashboard";
+import { Sidebar } from "@/components/sidebar";
 
 type RootLayoutProps = {
   children: React.ReactNode; // Définir le type pour les enfants

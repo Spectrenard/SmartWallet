@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import { CartesianGrid, Line, LineChart, XAxis } from "recharts";
+import { CartesianGrid, XAxis, Bar, BarChart } from "recharts";
 
 import {
   Card,
@@ -17,155 +17,99 @@ import {
   ChartTooltipContent,
 } from "@/components/ui/chart";
 
-export const description = "An interactive line chart";
+export const description = "A multiple bar chart";
 
 const chartConfig = {
-  views: {
-    label: "Page Views",
+  revenu: {
+    label: "Revenu",
   },
-  desktop: {
-    label: "Desktop",
-    color: "hsl(var(--chart-1))",
-  },
-  mobile: {
-    label: "Mobile",
-    color: "hsl(var(--chart-2))",
-  },
-  revenue: {
-    label: "Revenue",
-    color: "hsl(var(--chart-3))",
-  },
-  expenses: {
-    label: "Expenses",
-    color: "hsl(var(--chart-4))",
+
+  dépenses: {
+    label: "Dépenses",
   },
 } satisfies ChartConfig;
 
-// Ajoutez cette définition de type en haut du fichier ou importez-la si elle est définie ailleurs
-type Transaction = {
-  createdAt: string;
-  amount: number;
-};
-
 export function DashboardChart() {
-  const [transactionsState, setTransactionsState] = useState<Transaction[]>([]);
-  const [chartData, setChartData] = useState<
-    { date: string; revenue: number; expenses: number }[]
-  >([]);
+  const [chartData, setChartData] = useState([]);
 
   useEffect(() => {
-    const fetchTransactions = async () => {
+    async function fetchData() {
       try {
         const response = await fetch("/api/transactions");
-        const data = await response.json();
-        setTransactionsState(data);
-      } catch (error) {
-        console.error(
-          "Erreur lors de la récupération des transactions:",
-          error
-        );
-      }
-    };
+        const transactions = await response.json();
 
-    fetchTransactions();
+        interface Transaction {
+          createdAt: string;
+          amount: number;
+        }
+
+        interface MonthlyData {
+          [key: string]: {
+            month: string;
+            revenu: number;
+            dépenses: number;
+          };
+        }
+
+        const monthlyData = transactions.reduce(
+          (acc: MonthlyData, transaction: Transaction) => {
+            const date = new Date(transaction.createdAt);
+            const month = date.toLocaleString("default", { month: "long" });
+            const year = date.getFullYear();
+            const key = `${month} ${year}`;
+
+            if (!acc[key]) {
+              acc[key] = { month: key, revenu: 0, dépenses: 0 };
+            }
+
+            if (transaction.amount > 0) {
+              acc[key].revenu += transaction.amount;
+            } else {
+              acc[key].dépenses += Math.abs(transaction.amount);
+            }
+
+            return acc;
+          },
+          {}
+        );
+
+        setChartData(Object.values(monthlyData));
+      } catch (error) {
+        console.error("Erreur lors de la récupération des données :", error);
+      }
+    }
+
+    fetchData();
   }, []);
 
-  useEffect(() => {
-    const aggregatedData = transactionsState.reduce(
-      (
-        acc: Record<
-          string,
-          { date: string; revenue: number; expenses: number }
-        >,
-        transaction
-      ) => {
-        const date = new Date(transaction.createdAt).toLocaleDateString(
-          "en-US",
-          {
-            month: "short",
-            day: "numeric",
-          }
-        );
-
-        if (!acc[date]) {
-          acc[date] = { date, revenue: 0, expenses: 0 };
-        }
-
-        if (transaction.amount > 0) {
-          acc[date].revenue += transaction.amount;
-        } else {
-          acc[date].expenses += Math.abs(transaction.amount);
-        }
-
-        return acc;
-      },
-      {} as Record<string, { date: string; revenue: number; expenses: number }>
-    );
-
-    setChartData(Object.values(aggregatedData));
-  }, [transactionsState]);
-
   return (
-    <Card className="bg-customColor-800 border-customColor-400">
-      <CardHeader className="flex flex-col items-stretch space-y-0 border-b border-customColor-600 p-0 sm:flex-row">
-        <div className="flex flex-1 text-customColor-100 flex-col justify-center gap-1 px-6 py-5 sm:py-6">
-          <CardTitle className="font-normal">Aperçu de votre année</CardTitle>
-          <CardDescription className="text-customColor-400">
-            Toutes vos transactions sous forme de graphique
-          </CardDescription>
-        </div>
+    <Card className="max-w-2xl bg-customColor-800 border-none">
+      <CardHeader>
+        <CardTitle className="text-customColor-100">
+          Revenus et Dépenses Mensuels
+        </CardTitle>
+        <CardDescription>
+          Affichage des revenus et dépenses par mois
+        </CardDescription>
       </CardHeader>
-      <CardContent className="px-2 sm:p-6 border-customColor-600">
-        <ChartContainer
-          config={chartConfig}
-          className="aspect-auto h-[250px] w-full border-customColor-600"
-        >
-          <LineChart
-            accessibilityLayer
-            data={chartData}
-            margin={{
-              left: 12,
-              right: 12,
-            }}
-          >
-            <CartesianGrid vertical={false} stroke="var(--customColor-600)" />
+      <CardContent>
+        <ChartContainer config={chartConfig}>
+          <BarChart accessibilityLayer data={chartData}>
+            <CartesianGrid vertical={false} />
             <XAxis
-              dataKey="date"
+              dataKey="month"
               tickLine={false}
+              tickMargin={10}
               axisLine={false}
-              tickMargin={8}
-              minTickGap={32}
+              tickFormatter={(value) => value.slice(0, 3)}
             />
             <ChartTooltip
-              content={
-                <ChartTooltipContent
-                  className="w-[150px]"
-                  nameKey="views"
-                  labelFormatter={(value) => {
-                    return new Date(value).toLocaleDateString("en-US", {
-                      month: "short",
-                      day: "numeric",
-                      year: "numeric",
-                    });
-                  }}
-                />
-              }
+              cursor={false}
+              content={<ChartTooltipContent indicator="dashed" />}
             />
-            <Line
-              dataKey="revenue"
-              type="monotone"
-              stroke="var(--color-revenue)"
-              strokeWidth={2}
-              dot={false}
-            />
-            <Line
-              dataKey="expenses"
-              type="monotone"
-              stroke="var(--color-expenses)"
-              strokeWidth={2}
-              dot={false}
-            />
-          </LineChart>
+            <Bar dataKey="revenu" fill="hsl(207, 90%, 54%)" radius={4} />
+            <Bar dataKey="dépenses" fill="hsl(10, 70%, 50%)" radius={4} />
+          </BarChart>
         </ChartContainer>
       </CardContent>
     </Card>
