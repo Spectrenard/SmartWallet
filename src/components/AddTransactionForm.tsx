@@ -1,5 +1,6 @@
 // AddTransactionForm.tsx
 import React from "react";
+import { toast } from "react-toastify";
 import Btn from "./ui/animated-subscribe-button";
 
 interface AddTransactionFormProps {
@@ -21,6 +22,18 @@ const AddTransactionForm: React.FC<AddTransactionFormProps> = ({
     e.preventDefault();
     const formattedAmount = parseFloat(amount.replace(",", ".")); // Remplace la virgule par un point
     handleSubmit(e, formattedAmount); // Passe le montant formaté à la fontion de soumission
+
+    // Affiche une notification de succès
+    toast.success("Transaction ajoutée avec succès !", {
+      position: "top-right",
+      autoClose: 3000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "colored",
+    });
   };
   return (
     <div className="bg-customColor-800 rounded-lg p-6 mb-10 max-w-2xl w-full">

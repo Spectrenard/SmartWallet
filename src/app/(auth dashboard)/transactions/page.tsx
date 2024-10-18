@@ -1,4 +1,7 @@
 import TransactionsComponent from "@/components/Transactions";
+import "react-toastify/dist/ReactToastify.css";
+import React from "react";
+import { ToastContainer } from "react-toastify";
 
 export default function Transactions() {
   return (
@@ -7,6 +10,7 @@ export default function Transactions() {
         Gérez vos transactions
       </h1>
       <TransactionsComponent />
+      <ToastContainer />
     </main>
   );
 }
