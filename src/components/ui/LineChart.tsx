@@ -95,13 +95,14 @@ export function DashboardChart() {
       <CardContent>
         <ChartContainer config={chartConfig}>
           <BarChart accessibilityLayer data={chartData}>
-            <CartesianGrid vertical={false} />
+            <CartesianGrid vertical={false} stroke="#202020" />
             <XAxis
               dataKey="month"
               tickLine={false}
               tickMargin={10}
-              axisLine={false}
+              axisLine={{ stroke: "#202020" }}
               tickFormatter={(value) => value.slice(0, 3)}
+              stroke="#202020"
             />
             <ChartTooltip
               cursor={false}

@@ -68,7 +68,7 @@ const TransactionChart: React.FC<TransactionChartProps> = ({
   useEffect(() => {
     const fetchTransactions = async () => {
       try {
-        const response = await fetch("/api/transactions"); // Remplace cette URL par celle de ton API
+        const response = await fetch("/api/transactions");
         const data = await response.json();
 
         // Mettre à jour les transactions
@@ -132,10 +132,10 @@ const TransactionChart: React.FC<TransactionChartProps> = ({
         <select
           value={selectedMonth}
           onChange={handleMonthSelect}
-          className="bg-gray-700 text-white p-2 rounded"
+          className="bg-customColor-700 text-customColor-300 p-2 rounded focus:outline-none focus:ring-2 focus:ring-customColor-500"
         >
           {months.map((month) => (
-            <option key={month} value={month}>
+            <option key={month} value={month} className="text-customColor-800">
               {format(new Date(`${month}-01`), "MMMM yyyy", { locale: fr })}
             </option>
           ))}
