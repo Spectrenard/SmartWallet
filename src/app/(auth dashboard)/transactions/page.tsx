@@ -10,10 +10,18 @@ export default function Transactions() {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    // Simuler un chargement
-    setTimeout(() => {
-      setIsLoading(false);
-    }, 1000);
+    const fetchData = async () => {
+      try {
+        const response = await fetch("/api/transactions");
+        const data = await response.json();
+      } catch (error) {
+        console.error("Erreur lors du chargement des transactions:", error);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchData();
   }, []);
 
   if (isLoading) {

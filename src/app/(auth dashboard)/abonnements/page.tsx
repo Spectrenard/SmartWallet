@@ -9,7 +9,7 @@ export default function Abonnements() {
     // Simuler un chargement
     setTimeout(() => {
       setIsLoading(false);
-    }, 1000);
+    }, 10);
   }, []);
 
   if (isLoading) {
