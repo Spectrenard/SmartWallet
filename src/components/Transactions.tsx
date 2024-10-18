@@ -1,7 +1,7 @@
 "use client";
 import { useEffect, useState } from "react";
 import AddTransactionForm from "./AddTransactionForm"; // Importer le composant
-import TransactionsList from "../components/TransactionList"; // Importer le composant
+import TransactionsMain from "../components/TransactionMain"; // Importer le composant
 
 import {
   Bookmark,
@@ -137,7 +137,7 @@ export default function Transactions() {
         />
       </div>
 
-      <TransactionsList
+      <TransactionsMain
         transactions={transactions}
         categoryConfig={categoryStyleConfig}
         handleDelete={handleDelete}
