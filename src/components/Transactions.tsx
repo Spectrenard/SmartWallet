@@ -126,7 +126,6 @@ export default function Transactions() {
       },
     ]);
   };
-
   return (
     <main className="min-h-screen flex flex-col mt-7 text-white">
       <div className="max-w-xl">
@@ -145,6 +144,7 @@ export default function Transactions() {
         categoryConfig={categoryStyleConfig}
         handleDelete={handleDelete}
         handleEdit={handleEdit}
+        onTransactionAdded={handleAddTransaction}
       />
     </main>
   );

@@ -68,9 +68,7 @@ const TransactionChart: React.FC<TransactionChartProps> = ({
     try {
       const response = await fetch("/api/transactions");
       const data = await response.json();
-
       setTransactions(data);
-
       const uniqueMonths = Array.from(
         new Set(
           data.map((transaction: TransactionChart) =>
@@ -82,9 +80,7 @@ const TransactionChart: React.FC<TransactionChartProps> = ({
         const dateB = new Date(`${b}-01`);
         return isBefore(dateB, dateA) ? -1 : 1;
       }) as string[];
-
       setMonths(uniqueMonths);
-
       if (!uniqueMonths.includes(selectedMonth)) {
         setSelectedMonth(uniqueMonths[0]);
       }
@@ -101,7 +97,6 @@ const TransactionChart: React.FC<TransactionChartProps> = ({
     const intervalId = setInterval(fetchTransactions, 5000); // Rafraîchir toutes les 5 secondes
     return () => clearInterval(intervalId);
   }, []);
-
   const handleMonthSelect = (event: React.ChangeEvent<HTMLSelectElement>) => {
     setSelectedMonth(event.target.value);
   };

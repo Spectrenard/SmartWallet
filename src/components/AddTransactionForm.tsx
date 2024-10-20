@@ -10,7 +10,6 @@ interface Transaction {
   category: string;
   date: string;
 }
-
 interface AddTransactionFormProps {
   amount: string;
   setAmount: (amount: string) => void;
@@ -31,7 +30,6 @@ const AddTransactionForm: React.FC<AddTransactionFormProps> = ({
   const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const formattedAmount = parseFloat(amount.replace(",", "."));
-
     try {
       const response = await fetch("/api/transactions", {
         method: "POST",
