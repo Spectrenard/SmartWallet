@@ -140,7 +140,7 @@ const TransactionChart: React.FC<TransactionChartProps> = ({
         <select
           value={selectedMonth}
           onChange={handleMonthSelect}
-          className="bg-gray-700 text-white p-2 rounded"
+          className="bg-customColor-700 text-customColor-300 p-2 rounded outline-none"
         >
           {months.map((month) => (
             <option key={month} value={month}>
