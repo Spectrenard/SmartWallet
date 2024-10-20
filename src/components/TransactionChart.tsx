@@ -64,45 +64,43 @@ const TransactionChart: React.FC<TransactionChartProps> = ({
   const [transactions, setTransactions] = useState<TransactionChart[]>([]);
   const [months, setMonths] = useState<string[]>([]);
 
-  // Fonction pour récupérer les transactions via l'API
-  useEffect(() => {
-    const fetchTransactions = async () => {
-      try {
-        const response = await fetch("/api/transactions");
-        const data = await response.json();
+  const fetchTransactions = async () => {
+    try {
+      const response = await fetch("/api/transactions");
+      const data = await response.json();
 
-        // Mettre à jour les transactions
-        setTransactions(data);
+      setTransactions(data);
 
-        // Extraire les mois disponibles à partir des transactions
-        const uniqueMonths = Array.from(
-          new Set(
-            data.map((transaction: TransactionChart) =>
-              format(new Date(transaction.createdAt), "yyyy-MM")
-            )
+      const uniqueMonths = Array.from(
+        new Set(
+          data.map((transaction: TransactionChart) =>
+            format(new Date(transaction.createdAt), "yyyy-MM")
           )
-        ).sort((a, b) => {
-          const dateA = new Date(`${a}-01`);
-          const dateB = new Date(`${b}-01`);
-          return isBefore(dateB, dateA) ? -1 : 1;
-        }) as string[];
+        )
+      ).sort((a, b) => {
+        const dateA = new Date(`${a}-01`);
+        const dateB = new Date(`${b}-01`);
+        return isBefore(dateB, dateA) ? -1 : 1;
+      }) as string[];
 
-        setMonths(uniqueMonths);
+      setMonths(uniqueMonths);
 
-        // Si le mois actuel n'est pas dans la liste, sélectionner le mois le plus récent
-        if (!uniqueMonths.includes(selectedMonth)) {
-          setSelectedMonth(uniqueMonths[0]);
-        }
-      } catch (error) {
-        console.error(
-          "Erreur lors de la récupération des transactions:",
-          error
-        );
+      if (!uniqueMonths.includes(selectedMonth)) {
+        setSelectedMonth(uniqueMonths[0]);
       }
-    };
+    } catch (error) {
+      console.error("Erreur lors de la récupération des transactions:", error);
+    }
+  };
 
+  useEffect(() => {
     fetchTransactions();
   }, [selectedMonth]);
+
+  useEffect(() => {
+    const intervalId = setInterval(fetchTransactions, 5000); // Rafraîchir toutes les 5 secondes
+    return () => clearInterval(intervalId);
+  }, []);
 
   const handleMonthSelect = (event: React.ChangeEvent<HTMLSelectElement>) => {
     setSelectedMonth(event.target.value);
@@ -114,13 +112,23 @@ const TransactionChart: React.FC<TransactionChartProps> = ({
       format(new Date(transaction.createdAt), "yyyy-MM") === selectedMonth
   );
 
-  // Traiter les transactions filtrées pour le graphique
+  // Modifier cette partie pour regrouper les transactions par catégorie
   const filteredData = filteredTransactions
     .filter((entry) => entry.amount < 0)
-    .map((entry) => ({
-      ...entry,
-      amount: Math.abs(entry.amount),
-    }))
+    .reduce((acc, entry) => {
+      const existingCategory = acc.find(
+        (item) => item.category === entry.category
+      );
+      if (existingCategory) {
+        existingCategory.amount += Math.abs(entry.amount);
+      } else {
+        acc.push({
+          category: entry.category,
+          amount: Math.abs(entry.amount),
+        });
+      }
+      return acc;
+    }, [] as { category: string; amount: number }[])
     .sort((a, b) => b.amount - a.amount);
 
   return (
@@ -132,10 +140,10 @@ const TransactionChart: React.FC<TransactionChartProps> = ({
         <select
           value={selectedMonth}
           onChange={handleMonthSelect}
-          className="bg-customColor-700 text-customColor-300 p-2 rounded focus:outline-none focus:ring-2 focus:ring-customColor-500"
+          className="bg-gray-700 text-white p-2 rounded"
         >
           {months.map((month) => (
-            <option key={month} value={month} className="text-customColor-800">
+            <option key={month} value={month}>
               {format(new Date(`${month}-01`), "MMMM yyyy", { locale: fr })}
             </option>
           ))}

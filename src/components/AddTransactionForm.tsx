@@ -3,12 +3,21 @@ import React from "react";
 import { toast } from "react-toastify";
 import Btn from "./ui/animated-subscribe-button";
 
+// Ajoutez cette interface
+interface Transaction {
+  id: string;
+  amount: number;
+  category: string;
+  date: string;
+}
+
 interface AddTransactionFormProps {
   amount: string;
   setAmount: (amount: string) => void;
   category: string;
   setCategory: (category: string) => void;
   handleSubmit: (e: React.FormEvent<HTMLFormElement>, amount: number) => void;
+  onTransactionAdded: (newTransaction: Transaction) => void;
 }
 
 const AddTransactionForm: React.FC<AddTransactionFormProps> = ({
@@ -17,23 +26,43 @@ const AddTransactionForm: React.FC<AddTransactionFormProps> = ({
   category,
   setCategory,
   handleSubmit,
+  onTransactionAdded,
 }) => {
-  const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const formattedAmount = parseFloat(amount.replace(",", ".")); // Remplace la virgule par un point
-    handleSubmit(e, formattedAmount); // Passe le montant formaté à la fontion de soumission
+    const formattedAmount = parseFloat(amount.replace(",", "."));
 
-    // Affiche une notification de succès
-    toast.success("Transaction ajoutée avec succès !", {
-      position: "top-right",
-      autoClose: 3000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-      theme: "colored",
-    });
+    try {
+      const response = await fetch("/api/transactions", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ amount: formattedAmount, category }),
+      });
+
+      if (response.ok) {
+        const newTransaction = await response.json();
+        onTransactionAdded(newTransaction.transaction);
+        setAmount("");
+        setCategory("");
+        toast.success("Transaction ajoutée avec succès !", {
+          position: "top-right",
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "colored",
+        });
+      } else {
+        throw new Error("Erreur lors de l'ajout de la transaction");
+      }
+    } catch (error) {
+      console.error("Erreur lors de l'ajout de la transaction:", error);
+      toast.error("Erreur lors de l'ajout de la transaction");
+    }
   };
   return (
     <div className="bg-customColor-800 rounded-lg p-6 mb-10 max-w-2xl w-full">

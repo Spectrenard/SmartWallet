@@ -114,6 +114,19 @@ export default function Transactions() {
     }
   };
 
+  const handleAddTransaction = (
+    newTransaction: Omit<Transaction, "id" | "createdAt">
+  ) => {
+    setTransactions((prevTransactions) => [
+      ...prevTransactions,
+      {
+        ...newTransaction,
+        id: Date.now(),
+        createdAt: new Date().toISOString(),
+      },
+    ]);
+  };
+
   return (
     <main className="min-h-screen flex flex-col mt-7 text-white">
       <div className="max-w-xl">
@@ -123,6 +136,7 @@ export default function Transactions() {
           category={category}
           setCategory={setCategory}
           handleSubmit={handleSubmit}
+          onTransactionAdded={handleAddTransaction}
         />
       </div>
 

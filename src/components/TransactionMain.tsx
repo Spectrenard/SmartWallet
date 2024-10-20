@@ -24,6 +24,7 @@ interface TransactionsMainProps {
   categoryConfig: CategoryConfig;
   handleDelete: (id: number) => void;
   handleEdit: (id: number, amount: number, category: string) => void;
+  onTransactionAdded: (transaction: Transaction) => void;
 }
 
 const TransactionsMain: React.FC<TransactionsMainProps> = ({
@@ -31,6 +32,7 @@ const TransactionsMain: React.FC<TransactionsMainProps> = ({
   categoryConfig,
   handleDelete,
   handleEdit,
+  onTransactionAdded,
 }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [transactionToDelete, setTransactionToDelete] = useState<number | null>(
@@ -124,7 +126,8 @@ const TransactionsMain: React.FC<TransactionsMainProps> = ({
         <TransactionChart
           chartDataArray={chartDataArray}
           chartConfig={chartConfig}
-          transactions={chartTransactions}
+          // Supprimez ou commentez cette ligne si elle n'est pas nécessaire
+          // transactions={chartTransactions}
         />
       </div>
 
