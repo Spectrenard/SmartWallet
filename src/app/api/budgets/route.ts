@@ -1,6 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
 import { PrismaClient } from "@prisma/client";
-import { Jwt } from "jsonwebtoken";
 import { jwtVerify } from "jose";
 
 const prisma = new PrismaClient();
@@ -86,7 +85,7 @@ export async function POST(req: NextRequest) {
     );
 
     return NextResponse.json({
-      message: "Budgets mis à jour avec succès",
+      message: "Votre budget à été mis à jour avec succès",
       budgets: updatedBudgets,
     });
   } catch (error) {

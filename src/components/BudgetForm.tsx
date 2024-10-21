@@ -5,7 +5,7 @@ import Btn from "./ui/animated-subscribe-button";
 
 export default function BudgetForm() {
   const [categories, setCategories] = useState<string[]>([]);
-  const [budgets, setBudgets] = useState<{ [key: string]: number }>({});
+  const [budgets, setBudgets] = useState<{ [key: string]: string }>({});
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [submitStatus, setSubmitStatus] = useState<string | null>(null);
@@ -29,10 +29,10 @@ export default function BudgetForm() {
         // Convertir les budgets en objet avec la catégorie comme clé
         const budgetsObject = budgetsData.reduce(
           (
-            acc: { [key: string]: number },
+            acc: { [key: string]: string },
             budget: { category: string; amount: number }
           ) => {
-            acc[budget.category] = budget.amount;
+            acc[budget.category] = budget.amount.toFixed(2); // Convertir en chaîne avec 2 décimales
             return acc;
           },
           {}
@@ -51,8 +51,14 @@ export default function BudgetForm() {
     fetchCategoriesAndBudgets();
   }, []);
 
-  const handleBudgetChange = (category: string, value: number) => {
-    setBudgets((prev) => ({ ...prev, [category]: value }));
+  const handleBudgetChange = (category: string, value: string) => {
+    // Permettre les nombres décimaux (avec point ou virgule) et les nombres négatifs
+    const regex = /^-?\d*[.,]?\d*$/;
+    if (value === "" || regex.test(value)) {
+      // Remplacer la virgule par un point pour la cohérence interne
+      const normalizedValue = value.replace(",", ".");
+      setBudgets((prev) => ({ ...prev, [category]: normalizedValue }));
+    }
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -64,7 +70,7 @@ export default function BudgetForm() {
       const budgetsArray = Object.entries(budgets).map(
         ([category, amount]) => ({
           category,
-          amount: Number(amount),
+          amount: parseFloat(amount) || 0, // Convertir en nombre, 0 si vide ou invalide
         })
       );
 
@@ -83,7 +89,12 @@ export default function BudgetForm() {
         );
       }
 
-      setSubmitStatus("Budgets enregistrés avec succès");
+      setSubmitStatus("Votre budget a été enregistré avec succès !");
+
+      // Attendre un court instant avant de recharger la page
+      setTimeout(() => {
+        window.location.reload();
+      }, 1500); // Recharge après 1.5 secondes
     } catch (err) {
       setError(
         err instanceof Error
@@ -122,13 +133,11 @@ export default function BudgetForm() {
             </label>
             <div className="relative">
               <input
-                type="number"
-                placeholder="0"
+                type="text" // Changé de "number" à "text" pour permettre la saisie de virgules
+                placeholder="À définir"
                 id={`budget-${category}`}
                 value={budgets[category] || ""}
-                onChange={(e) =>
-                  handleBudgetChange(category, Number(e.target.value))
-                }
+                onChange={(e) => handleBudgetChange(category, e.target.value)}
                 className="w-full p-2 pl-8 rounded bg-customColor-600 text-white focus:outline-none focus:ring-2 focus:ring-emerald-500"
               />
               <Euro
@@ -143,7 +152,10 @@ export default function BudgetForm() {
         <Btn text="Valider" />
       </div>
       {submitStatus && (
-        <p className="text-green-500 text-center mt-4">{submitStatus}</p>
+        <p className="text-green-500 text-center mt-4">
+          {submitStatus}
+          <span className="ml-2">Mise à jour en cours...</span>
+        </p>
       )}
       {error && <p className="text-red-500 text-center mt-4">{error}</p>}
     </form>
