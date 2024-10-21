@@ -5,6 +5,7 @@ import TotalMonthExpense from "@/components/TotalMonthExpense";
 import TotalIncome from "@/components/TotalMonthIncome";
 import { DashboardChart } from "@/components/ui/LineChart";
 import Loading from "@/components/Loading";
+import { DonutChart } from "@/components/ui/PieChart";
 
 export default function Dashboard() {
   const [isLoading, setIsLoading] = useState(true);
@@ -31,15 +32,23 @@ export default function Dashboard() {
   }
 
   return (
-    <main className="min-h-screen p-4 flex flex-col">
-      <p className="text-white text-3xl font-normal mb-6">Aperçu</p>
-      <div className="flex gap-4">
+    <main className="min-h-screen p-4 flex flex-col gap-6">
+      <h1 className="text-white text-3xl font-normal">Aperçu</h1>
+
+      <div className="grid grid-cols-3 gap-4">
         <TotalBalance />
         <TotalIncome />
         <TotalMonthExpense />
       </div>
-      <div>
-        <DashboardChart />
+
+      <div className="flex gap-4 h-64">
+        <div className="flex-1">
+          <DashboardChart />
+        </div>
+
+        <div className="flex-1">
+          <DonutChart />
+        </div>
       </div>
     </main>
   );

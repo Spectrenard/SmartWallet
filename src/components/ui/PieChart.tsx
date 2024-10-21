@@ -1,10 +1,8 @@
 "use client";
-
 import * as React from "react";
 import { useEffect, useState } from "react";
 import { PieChart, Pie, Label } from "recharts";
 import { InfoIcon } from "lucide-react";
-
 import {
   Card,
   CardContent,
@@ -19,15 +17,12 @@ import {
   ChartTooltip,
   ChartTooltipContent,
 } from "@/components/ui/chart";
-
 export const description = "Graphique en donut des budgets par catégorie";
-
 interface BudgetData {
   category: string;
   amount: number;
   fill?: string;
 }
-
 const categoryColors: { [key: string]: string } = {
   "Loisirs & vacances": "#eab308",
   "Alimentation & restaurants": "#f97316",
@@ -37,10 +32,8 @@ const categoryColors: { [key: string]: string } = {
   Transports: "#6366f1",
   Autre: "#94a3b8",
 };
-
 export function DonutChart() {
   const [chartData, setChartData] = useState<BudgetData[]>([]);
-
   useEffect(() => {
     const fetchBudgets = async () => {
       try {
@@ -60,14 +53,11 @@ export function DonutChart() {
         console.error("Erreur lors de la récupération des budgets:", error);
       }
     };
-
     fetchBudgets();
   }, []);
-
   const totalBudget = React.useMemo(() => {
     return chartData.reduce((acc, curr) => acc + curr.amount, 0);
   }, [chartData]);
-
   const chartConfig: ChartConfig = React.useMemo(() => {
     return chartData.reduce(
       (config, item) => {
@@ -80,17 +70,9 @@ export function DonutChart() {
       { visitors: { label: "Montant" } } as ChartConfig
     );
   }, [chartData]);
-
   return (
-    <Card className="flex flex-col bg-customColor-800 border-none">
-      <CardHeader className="items-center pb-0">
-        <CardTitle className="text-white text-xl">
-          Répartition des budgets
-        </CardTitle>
-        <CardDescription className="text-customColor-400">
-          Par catégorie
-        </CardDescription>
-      </CardHeader>
+    <Card className="flex flex-col bg-customColor-800 border-none shadow-none">
+      <CardHeader className="items-center pb-0"></CardHeader>
       <CardContent className="flex-1 pb-0">
         <ChartContainer
           config={chartConfig}

@@ -114,11 +114,8 @@ export default function BudgetForm() {
   return (
     <form
       onSubmit={handleSubmit}
-      className="bg-customColor-800 p-8 rounded-lg shadow-lg max-w-2xl mx-auto"
+      className="bg-customColor-800 p-8 rounded-lg max-w-2xl mx-auto"
     >
-      <h2 className="text-white text-xl mb-6 text-center">
-        Fixez vos budgets par catégorie
-      </h2>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         {categories.map((category) => (
           <div
