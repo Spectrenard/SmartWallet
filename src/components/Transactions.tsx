@@ -72,7 +72,11 @@ export default function Transactions() {
       body: JSON.stringify({ amount: parseFloat(amount), category }),
     });
     if (res.ok) {
-      fetchTransactions();
+      const newTransaction = await res.json();
+      setTransactions((prevTransactions) => [
+        ...prevTransactions,
+        newTransaction.transaction,
+      ]);
       setAmount("");
       setCategory("");
     } else {
@@ -81,6 +85,7 @@ export default function Transactions() {
   };
 
   const handleDelete = async (id: number) => {
+    console.log("Tentative de suppression de la transaction avec l'ID:", id);
     const res = await fetch("/api/transactions", {
       method: "DELETE",
       headers: {
@@ -89,9 +94,14 @@ export default function Transactions() {
       body: JSON.stringify({ id }),
     });
     if (res.ok) {
-      fetchTransactions();
+      console.log("Suppression réussie");
+      setTransactions((prevTransactions) =>
+        prevTransactions.filter((t) => t.id !== id)
+      );
     } else {
       console.error("Erreur lors de la suppression de la transaction");
+      const errorData = await res.json();
+      console.error("Détails de l'erreur:", errorData);
     }
   };
 
@@ -108,7 +118,12 @@ export default function Transactions() {
       body: JSON.stringify({ id, amount, category }),
     });
     if (res.ok) {
-      fetchTransactions();
+      const updatedTransaction = await res.json();
+      setTransactions((prevTransactions) =>
+        prevTransactions.map((t) =>
+          t.id === id ? updatedTransaction.transaction : t
+        )
+      );
     } else {
       console.error("Erreur lors de la modification de la transaction");
     }
@@ -121,11 +136,12 @@ export default function Transactions() {
       ...prevTransactions,
       {
         ...newTransaction,
-        id: Date.now(),
+        id: Date.now(), // Génère un ID unique temporaire
         createdAt: new Date().toISOString(),
       },
     ]);
   };
+
   return (
     <main className="min-h-screen flex flex-col mt-7 text-white">
       <div className="max-w-xl">

@@ -33,9 +33,9 @@ model Transaction {
 
 model Budget {
   id          Int      @id @default(autoincrement())
-  category    String
-  amount      Float
-  month       Int
-  user        User     @relation(fields: [userId], references: [id])
   userId      Int
+  amount      Float
+  category    String
+  createdAt   DateTime @default(now())
+  user        User     @relation(fields: [userId], references: [id])
 }

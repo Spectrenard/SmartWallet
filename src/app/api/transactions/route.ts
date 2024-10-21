@@ -101,10 +101,19 @@ export async function DELETE(req: NextRequest) {
   }
 
   try {
-    const { id } = await req.json();
+    const body = await req.json();
+    console.log("Body reçu:", body);
+
+    let id = body.id;
+    console.log("ID reçu:", id);
+
+    // Convertir l'ID en nombre si c'est une chaîne
+    if (typeof id === "string") {
+      id = parseInt(id, 10);
+    }
 
     // Vérification que l'ID est un nombre valide
-    if (typeof id !== "number") {
+    if (typeof id !== "number" || isNaN(id)) {
       return NextResponse.json(
         { message: "ID de transaction invalide" },
         { status: 400 }
@@ -117,13 +126,23 @@ export async function DELETE(req: NextRequest) {
       new TextEncoder().encode(process.env.JWT_SECRET || "super_secret_key_123")
     );
     const userId = payload.userId;
+    console.log("UserID:", userId);
 
     // Vérifier si la transaction appartient à l'utilisateur
     const transaction = await prisma.transaction.findUnique({ where: { id } });
-    if (!transaction || transaction.userId !== userId) {
+    console.log("Transaction trouvée:", transaction);
+
+    if (!transaction) {
       return NextResponse.json(
-        { message: "Transaction non trouvée ou non autorisée" },
+        { message: "Transaction non trouvée" },
         { status: 404 }
+      );
+    }
+
+    if (transaction.userId !== userId) {
+      return NextResponse.json(
+        { message: "Non autorisé à supprimer cette transaction" },
+        { status: 403 }
       );
     }
 
@@ -132,6 +151,7 @@ export async function DELETE(req: NextRequest) {
 
     return NextResponse.json({ message: "Transaction supprimée avec succès" });
   } catch (error) {
+    console.error("Erreur lors de la suppression:", error);
     return NextResponse.json(
       {
         message: "Erreur lors de la suppression de la transaction",
