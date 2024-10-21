@@ -1,4 +1,3 @@
-import { NextApiRequest, NextApiResponse } from "next";
 import { NextRequest, NextResponse } from "next/server";
 import { PrismaClient } from "@prisma/client";
 import { Jwt } from "jsonwebtoken";
@@ -7,8 +6,26 @@ import { jwtVerify } from "jose";
 const prisma = new PrismaClient();
 
 export async function GET(req: NextRequest) {
+  const token = req.cookies.get("token")?.value;
+
+  if (!token) {
+    return NextResponse.json(
+      { message: "Non autorisé, aucun token" },
+      { status: 401 }
+    );
+  }
+
   try {
-    const budgets = await prisma.budget.findMany();
+    // Décoder le token pour obtenir le userId
+    const { payload } = await jwtVerify(
+      token,
+      new TextEncoder().encode(process.env.JWT_SECRET || "super_secret_key_123")
+    );
+    const userId = Number(payload.userId);
+
+    const budgets = await prisma.budget.findMany({
+      where: { userId },
+    });
     return NextResponse.json(budgets);
   } catch (error) {
     console.error("Erreur lors de la récupération des budgets:", error);
@@ -20,9 +37,24 @@ export async function GET(req: NextRequest) {
 }
 
 export async function POST(req: NextRequest) {
+  const token = req.cookies.get("token")?.value;
+
+  if (!token) {
+    return NextResponse.json(
+      { message: "Non autorisé, aucun token" },
+      { status: 401 }
+    );
+  }
+
   try {
     const budgets = await req.json();
-    const userId = 1; // À remplacer par la logique d'authentification réelle
+
+    // Décoder le token pour obtenir le userId
+    const { payload } = await jwtVerify(
+      token,
+      new TextEncoder().encode(process.env.JWT_SECRET || "super_secret_key_123")
+    );
+    const userId = Number(payload.userId);
 
     const updatedBudgets = await Promise.all(
       budgets.map(async (budget: { category: string; amount: number }) => {
