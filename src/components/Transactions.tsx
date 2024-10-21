@@ -95,12 +95,7 @@ export default function Transactions() {
       body: JSON.stringify({ id, amount, category }),
     });
     if (res.ok) {
-      const updatedTransaction = await res.json();
-      setTransactions((prevTransactions) =>
-        prevTransactions.map((t) =>
-          t.id === id ? updatedTransaction.transaction : t
-        )
-      );
+      fetchTransactions();
     } else {
       console.error("Erreur lors de la modification de la transaction");
     }
