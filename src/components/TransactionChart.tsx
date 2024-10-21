@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import {
   Bar,
   BarChart,
@@ -63,8 +63,10 @@ const TransactionChart: React.FC<TransactionChartProps> = ({
   );
   const [transactions, setTransactions] = useState<TransactionChart[]>([]);
   const [months, setMonths] = useState<string[]>([]);
+  const [isActive, setIsActive] = useState(true);
 
-  const fetchTransactions = async () => {
+  const fetchTransactions = useCallback(async () => {
+    if (!isActive) return;
     try {
       const response = await fetch("/api/transactions");
       const data = await response.json();
@@ -87,16 +89,27 @@ const TransactionChart: React.FC<TransactionChartProps> = ({
     } catch (error) {
       console.error("Erreur lors de la récupération des transactions:", error);
     }
-  };
+  }, [isActive, selectedMonth]);
 
   useEffect(() => {
     fetchTransactions();
-  }, [selectedMonth]);
+  }, [fetchTransactions]);
 
   useEffect(() => {
-    const intervalId = setInterval(fetchTransactions, 5000); // Rafraîchir toutes les 5 secondes
-    return () => clearInterval(intervalId);
-  }, []);
+    const intervalId = setInterval(fetchTransactions, 5000); // Rafraîchir toutes les 30 secondes
+
+    const handleVisibilityChange = () => {
+      setIsActive(!document.hidden);
+    };
+
+    document.addEventListener("visibilitychange", handleVisibilityChange);
+
+    return () => {
+      clearInterval(intervalId);
+      document.removeEventListener("visibilitychange", handleVisibilityChange);
+    };
+  }, [fetchTransactions]);
+
   const handleMonthSelect = (event: React.ChangeEvent<HTMLSelectElement>) => {
     setSelectedMonth(event.target.value);
   };

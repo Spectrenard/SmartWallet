@@ -2,13 +2,7 @@
 import { useEffect, useState } from "react";
 import AddTransactionForm from "./AddTransactionForm";
 import TransactionsMain from "../components/TransactionMain";
-
-interface Transaction {
-  id: number;
-  amount: number;
-  category: string;
-  createdAt: string;
-}
+import { Transaction } from "../types";
 
 type Category =
   | "Salaire"
@@ -64,24 +58,7 @@ export default function Transactions() {
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const res = await fetch("/api/transactions", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ amount: parseFloat(amount), category }),
-    });
-    if (res.ok) {
-      const newTransaction = await res.json();
-      setTransactions((prevTransactions) => [
-        ...prevTransactions,
-        newTransaction.transaction,
-      ]);
-      setAmount("");
-      setCategory("");
-    } else {
-      console.error("Erreur lors de la création de la transaction");
-    }
+    // Ne faites rien ici, laissez AddTransactionForm gérer l'ajout
   };
 
   const handleDelete = async (id: number) => {
@@ -129,19 +106,14 @@ export default function Transactions() {
     }
   };
 
-  const handleAddTransaction = (
-    newTransaction: Omit<Transaction, "id" | "createdAt">
-  ) => {
-    setTransactions((prevTransactions) => [
-      ...prevTransactions,
-      {
-        ...newTransaction,
-        id: Date.now(), // Génère un ID unique temporaire
-        createdAt: new Date().toISOString(),
-      },
-    ]);
+  const handleAddTransaction = (newTransaction: Transaction) => {
+    console.log("handleAddTransaction appelé avec:", newTransaction);
+    setTransactions((prevTransactions) => {
+      const updatedTransactions = [...prevTransactions, newTransaction];
+      console.log("Transactions mises à jour:", updatedTransactions);
+      return updatedTransactions;
+    });
   };
-
   return (
     <main className="min-h-screen flex flex-col mt-7 text-white">
       <div className="max-w-xl">

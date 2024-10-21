@@ -2,20 +2,14 @@
 import React from "react";
 import { toast } from "react-toastify";
 import Btn from "./ui/animated-subscribe-button";
+import { Transaction } from "../types";
 
-// Ajoutez cette interface
-interface Transaction {
-  id: string;
-  amount: number;
-  category: string;
-  date: string;
-}
 interface AddTransactionFormProps {
   amount: string;
   setAmount: (amount: string) => void;
   category: string;
   setCategory: (category: string) => void;
-  handleSubmit: (e: React.FormEvent<HTMLFormElement>, amount: number) => void;
+  handleSubmit: (e: React.FormEvent<HTMLFormElement>) => void;
   onTransactionAdded: (newTransaction: Transaction) => void;
 }
 
@@ -40,20 +34,12 @@ const AddTransactionForm: React.FC<AddTransactionFormProps> = ({
       });
 
       if (response.ok) {
-        const newTransaction = await response.json();
-        onTransactionAdded(newTransaction.transaction);
+        const data = await response.json();
+        console.log("Nouvelle transaction créée:", data.transaction);
+        onTransactionAdded(data.transaction);
         setAmount("");
         setCategory("");
-        toast.success("Transaction ajoutée avec succès !", {
-          position: "top-right",
-          autoClose: 3000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          theme: "colored",
-        });
+        toast.success("Transaction ajoutée avec succès !");
       } else {
         throw new Error("Erreur lors de l'ajout de la transaction");
       }

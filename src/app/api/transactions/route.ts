@@ -103,10 +103,8 @@ export async function DELETE(req: NextRequest) {
   try {
     const body = await req.json();
     console.log("Body reçu:", body);
-
     let id = body.id;
     console.log("ID reçu:", id);
-
     // Convertir l'ID en nombre si c'est une chaîne
     if (typeof id === "string") {
       id = parseInt(id, 10);
@@ -131,7 +129,6 @@ export async function DELETE(req: NextRequest) {
     // Vérifier si la transaction appartient à l'utilisateur
     const transaction = await prisma.transaction.findUnique({ where: { id } });
     console.log("Transaction trouvée:", transaction);
-
     if (!transaction) {
       return NextResponse.json(
         { message: "Transaction non trouvée" },
@@ -145,7 +142,6 @@ export async function DELETE(req: NextRequest) {
         { status: 403 }
       );
     }
-
     // Supprimer la transaction
     await prisma.transaction.delete({ where: { id } });
 
