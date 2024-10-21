@@ -48,35 +48,35 @@ export default function Budgets() {
   }
 
   return (
-    <main className="min-h-screen p-6 flex flex-col gap-6">
+    <main className="p-4 flex flex-col gap-6">
       <h1 className="text-white text-3xl font-medium mb-2">
         Gérez vos budgets
       </h1>
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
-        <div className="bg-customColor-800 p-4 rounded-lg shadow-lg flex items-center">
+        <div className="bg-customColor-800 p-4 rounded-lg  flex items-center">
           <Euro className="text-emerald-500 mr-4" size={32} />
           <div>
             <p className="text-customColor-400">Budget total</p>
-            <p className="text-white text-2xl font-bold">
+            <p className="text-white text-2xl ">
               {budgetSummary.total.toFixed(2)} €
             </p>
           </div>
         </div>
-        <div className="bg-customColor-800 p-4 rounded-lg shadow-lg flex items-center">
+        <div className="bg-customColor-800 p-4 rounded-lg  flex items-center">
           <ArrowUpCircle className="text-red-500 mr-4" size={32} />
           <div>
-            <p className="text-customColor-400">Catégorie la plus élevée</p>
-            <p className="text-white text-xl font-semibold">
+            <p className="text-customColor-400">Budget la plus élevée</p>
+            <p className="text-white text-xl ">
               {budgetSummary.highestCategory}
             </p>
           </div>
         </div>
-        <div className="bg-customColor-800 p-4 rounded-lg shadow-lg flex items-center">
+        <div className="bg-customColor-800 p-4 rounded-lg  flex items-center">
           <ArrowDownCircle className="text-blue-500 mr-4" size={32} />
           <div>
-            <p className="text-customColor-400">Catégorie la plus basse</p>
-            <p className="text-white text-xl font-semibold">
+            <p className="text-customColor-400">Budget la plus basse</p>
+            <p className="text-white text-xl ">
               {budgetSummary.lowestCategory}
             </p>
           </div>
@@ -85,14 +85,14 @@ export default function Budgets() {
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         <div className="lg:col-span-2 bg-customColor-800 p-6 rounded-lg shadow-lg">
-          <h2 className="text-white text-2xl font-semibold mb-4">
+          <h1 className="text-2xl  mb-4 text-transparent bg-clip-text bg-gradient-to-r from-gray-600 to-gray-100">
             Définir vos budgets
-          </h2>
+          </h1>
           <BudgetForm />
         </div>
         <div className="bg-customColor-800 p-6 rounded-lg shadow-lg">
-          <h2 className="text-white text-2xl font-semibold mb-4">
-            Répartition des budgets
+          <h2 className="text-2xl  mb-4 text-transparent bg-clip-text bg-gradient-to-r from-gray-600 to-gray-100">
+            Aperçu
           </h2>
           <DonutChart />
         </div>

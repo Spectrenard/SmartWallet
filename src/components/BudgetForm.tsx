@@ -112,49 +112,49 @@ export default function BudgetForm() {
     return <div className="text-red-500 text-center">Erreur : {error}</div>;
 
   return (
-    <form
-      onSubmit={handleSubmit}
-      className="bg-customColor-800 p-8 rounded-lg max-w-2xl mx-auto"
-    >
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        {categories.map((category) => (
-          <div
-            key={category}
-            className="bg-customColor-700 px-2 py-4 rounded-lg"
-          >
-            <label
-              htmlFor={`budget-${category}`}
-              className="text-white text-lg font-medium block mb-2"
-            >
-              {category}
-            </label>
-            <div className="relative">
-              <input
-                type="text" // Changé de "number" à "text" pour permettre la saisie de virgules
-                placeholder="À définir"
-                id={`budget-${category}`}
-                value={budgets[category] || ""}
-                onChange={(e) => handleBudgetChange(category, e.target.value)}
-                className="w-full p-2 pl-8 rounded bg-customColor-600 text-white focus:outline-none focus:ring-2 focus:ring-emerald-500"
-              />
-              <Euro
-                className="absolute left-2 top-1/2 transform -translate-y-1/2 text-emerald-500"
-                size={20}
-              />
+    <div className="flex flex-col">
+      <form onSubmit={handleSubmit} className="w-full">
+        <h1 className="text-customColor-300 text-md font-bold pt-4 pb-4">
+          {" "}
+          Visualisez et configurer vos budgets
+        </h1>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-12">
+          {categories.map((category) => (
+            <div key={category} className="bg-customColor-700 p-4 rounded-lg">
+              <label
+                htmlFor={`budget-${category}`}
+                className="text-white text-lg font-medium block mb-2"
+              >
+                {category}
+              </label>
+              <div className="relative">
+                <input
+                  type="text"
+                  placeholder="À définir"
+                  id={`budget-${category}`}
+                  value={budgets[category] || ""}
+                  onChange={(e) => handleBudgetChange(category, e.target.value)}
+                  className="w-full p-2 pl-8 rounded bg-customColor-600 text-white focus:outline-none focus:ring-2 focus:ring-emerald-500"
+                />
+                <Euro
+                  className="absolute left-2 top-1/2 transform -translate-y-1/2 text-emerald-500"
+                  size={20}
+                />
+              </div>
             </div>
-          </div>
-        ))}
-      </div>
-      <div className="text-center pt-6">
-        <Btn text="Valider" />
-      </div>
-      {submitStatus && (
-        <p className="text-green-500 text-center mt-4">
-          {submitStatus}
-          <span className="ml-2">Mise à jour en cours...</span>
-        </p>
-      )}
-      {error && <p className="text-red-500 text-center mt-4">{error}</p>}
-    </form>
+          ))}
+        </div>
+        <div className="text-center mt-16">
+          <Btn text="Valider" />
+        </div>
+        {submitStatus && (
+          <p className="text-green-500 text-center mt-4">
+            {submitStatus}
+            <span className="ml-2">Mise à jour en cours...</span>
+          </p>
+        )}
+        {error && <p className="text-red-500 text-center mt-4">{error}</p>}
+      </form>
+    </div>
   );
 }

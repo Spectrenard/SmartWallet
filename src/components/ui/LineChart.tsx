@@ -85,10 +85,10 @@ export function DashboardChart() {
   return (
     <Card className="max-w-2xl bg-customColor-800 border-none">
       <CardHeader>
-        <CardTitle className="text-customColor-100">
+        <CardTitle className="text-customColor-300">
           Revenus et Dépenses Mensuels
         </CardTitle>
-        <CardDescription>
+        <CardDescription className="text-customColor-400">
           Affichage des revenus et dépenses par mois
         </CardDescription>
       </CardHeader>

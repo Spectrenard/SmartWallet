@@ -22,7 +22,6 @@ export async function GET(req: NextRequest) {
   }
 
   try {
-    // Vérification du token (vous pouvez garder cette partie si vous voulez vous assurer que seuls les utilisateurs authentifiés peuvent accéder aux catégories)
     await jwtVerify(
       token,
       new TextEncoder().encode(process.env.JWT_SECRET || "super_secret_key_123")

@@ -72,7 +72,14 @@ export function DonutChart() {
   }, [chartData]);
   return (
     <Card className="flex flex-col bg-customColor-800 border-none shadow-none">
-      <CardHeader className="items-center pb-0"></CardHeader>
+      <CardHeader className="items-center pb-0">
+        <CardTitle className="text-customColor-300  text-md">
+          Répartition des budgets
+        </CardTitle>
+        <CardDescription className="text-customColor-400">
+          Par catégorie
+        </CardDescription>
+      </CardHeader>
       <CardContent className="flex-1 pb-0">
         <ChartContainer
           config={chartConfig}
@@ -125,7 +132,7 @@ export function DonutChart() {
         </ChartContainer>
       </CardContent>
       <CardFooter className="flex-col gap-2 text-sm pt-6">
-        <div className="flex items-center gap-2 font-medium leading-none text-white">
+        <div className="flex items-center gap-2 font-medium leading-none text-customColor-300">
           <InfoIcon className="h-4 w-4" /> Budget total pour toutes les
           catégories
         </div>
