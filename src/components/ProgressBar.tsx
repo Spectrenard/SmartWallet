@@ -66,9 +66,6 @@ const ProgressBar: React.FC = () => {
 
   return (
     <div className="p-6 space-y-4 rounded-lg w-full bg-customColor-800 max-w-2xl text-white">
-      <h1 className="font-bold text-customColor-300 pb-6">
-        États actuel de vos budgets
-      </h1>
       {budgets.map((budget) => {
         const spent = calculateSpent(budget.category);
         const percentage = Math.min((spent / budget.amount) * 100, 100);
@@ -87,9 +84,9 @@ const ProgressBar: React.FC = () => {
                 {spent.toFixed(2)}€ / {budget.amount}€
               </span>
             </div>
-            <div className="w-full bg-customColor-500 rounded-full h-6">
+            <div className="w-full bg-customColor-500 rounded-lg h-6">
               <div
-                className={`h-full rounded-full transition-all duration-300 ${progressColor}`}
+                className={`h-full rounded-lg transition-all duration-300 ${progressColor}`}
                 style={{ width: `${percentage}%` }}
               ></div>
             </div>

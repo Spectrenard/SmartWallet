@@ -86,13 +86,13 @@ export default function Budgets() {
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         <div className="lg:col-span-2 bg-customColor-800 p-6 rounded-lg shadow-lg">
-          <h1 className="text-2xl  mb-4 text-transparent bg-clip-text bg-gradient-to-r from-gray-600 to-gray-100">
+          <h1 className="text-xl font-bold  mb-4 text-transparent bg-clip-text bg-gradient-to-r from-gray-600 to-gray-100">
             Définir vos budgets
           </h1>
           <BudgetForm />
         </div>
         <div className="bg-customColor-800 p-6 rounded-lg shadow-lg">
-          <h2 className="text-2xl  mb-4 text-transparent bg-clip-text bg-gradient-to-r from-gray-600 to-gray-100">
+          <h2 className="text-xl font-bold  mb-4 text-transparent bg-clip-text bg-gradient-to-r from-gray-600 to-gray-100">
             Aperçu
           </h2>
           <DonutChart />

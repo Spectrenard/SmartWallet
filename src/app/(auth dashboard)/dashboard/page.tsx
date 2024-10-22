@@ -6,9 +6,11 @@ import TotalIncome from "@/components/TotalMonthIncome";
 import { DashboardChart } from "@/components/ui/LineChart";
 import Loading from "@/components/Loading";
 import ProgressBar from "@/components/ProgressBar";
+import RecentTransactions from "@/components/RecentTransactions";
 
 export default function Dashboard() {
   const [isLoading, setIsLoading] = useState(true);
+  const [transactions, setTransactions] = useState([]);
 
   useEffect(() => {
     const fetchTransactions = async () => {
@@ -17,6 +19,8 @@ export default function Dashboard() {
         if (!response.ok) {
           throw new Error("La requête a échoué");
         }
+        const data = await response.json();
+        setTransactions(data);
       } catch (error) {
         console.error("Erreur lors du chargement des transactions:", error);
       } finally {
@@ -41,14 +45,27 @@ export default function Dashboard() {
         <TotalMonthExpense />
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 h-[400px]">
-        <div className="lg:col-span-2 bg-customColor-800 rounded-lg shadow-md p-4 ">
-          <div className="max-w-2xl flex justify-center items-center mx-auto">
-            <DashboardChart />
-          </div>
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        <div className="bg-customColor-800 rounded-lg shadow-md p-4">
+          <h2 className="text-customColor-300 text-xl mb-4">
+            Transactions récentes
+          </h2>
+          <RecentTransactions transactions={transactions} />
         </div>
-        <div className="lg:col-span-1 bg-customColor-800 rounded-lg shadow-md p-4">
+        <div className="bg-customColor-800 rounded-lg shadow-md p-4">
+          <h2 className=" text-xl mb-4 text-customColor-300">
+            Progression des dépenses
+          </h2>
           <ProgressBar />
+        </div>
+      </div>
+
+      <div className="bg-customColor-800 rounded-lg shadow-md p-4">
+        <h2 className="text-customColor-300  text-xl mb-4">
+          Graphique des dépenses
+        </h2>
+        <div className="max-w-4xl flex justify-center items-center mx-auto">
+          <DashboardChart />
         </div>
       </div>
     </main>
