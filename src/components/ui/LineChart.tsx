@@ -1,7 +1,13 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import { CartesianGrid, XAxis, Bar, BarChart } from "recharts";
+import {
+  CartesianGrid,
+  XAxis,
+  Bar,
+  BarChart,
+  ResponsiveContainer,
+} from "recharts";
 
 import {
   Card,
@@ -83,7 +89,7 @@ export function DashboardChart() {
   }, []);
 
   return (
-    <Card className="max-w-2xl bg-customColor-800 border-none">
+    <Card className="w-full h-full bg-customColor-800 border-none shadow-none">
       <CardHeader>
         <CardTitle className="text-customColor-300">
           Revenus et Dépenses Mensuels
@@ -92,25 +98,27 @@ export function DashboardChart() {
           Affichage des revenus et dépenses par mois
         </CardDescription>
       </CardHeader>
-      <CardContent>
+      <CardContent className="flex-grow">
         <ChartContainer config={chartConfig}>
-          <BarChart accessibilityLayer data={chartData}>
-            <CartesianGrid vertical={false} stroke="#202020" />
-            <XAxis
-              dataKey="month"
-              tickLine={false}
-              tickMargin={10}
-              axisLine={{ stroke: "#202020" }}
-              tickFormatter={(value) => value.slice(0, 3)}
-              stroke="#202020"
-            />
-            <ChartTooltip
-              cursor={false}
-              content={<ChartTooltipContent indicator="dashed" />}
-            />
-            <Bar dataKey="revenu" fill="hsl(207, 90%, 54%)" radius={4} />
-            <Bar dataKey="dépenses" fill="hsl(10, 70%, 50%)" radius={4} />
-          </BarChart>
+          <ResponsiveContainer width="100%" height={300}>
+            <BarChart data={chartData}>
+              <CartesianGrid vertical={false} stroke="#202020" />
+              <XAxis
+                dataKey="month"
+                tickLine={false}
+                tickMargin={10}
+                axisLine={{ stroke: "#202020" }}
+                tickFormatter={(value) => value.slice(0, 3)}
+                stroke="#202020"
+              />
+              <ChartTooltip
+                cursor={false}
+                content={<ChartTooltipContent indicator="dashed" />}
+              />
+              <Bar dataKey="revenu" fill="hsl(207, 90%, 54%)" radius={4} />
+              <Bar dataKey="dépenses" fill="hsl(10, 70%, 50%)" radius={4} />
+            </BarChart>
+          </ResponsiveContainer>
         </ChartContainer>
       </CardContent>
     </Card>

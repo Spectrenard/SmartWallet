@@ -98,7 +98,6 @@ export default function Budgets() {
           <DonutChart />
         </div>
       </div>
-      <ProgressBar />
     </main>
   );
 }
