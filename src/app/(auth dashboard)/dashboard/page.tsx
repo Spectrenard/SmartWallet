@@ -6,6 +6,7 @@ import TotalIncome from "@/components/TotalMonthIncome";
 import { DashboardChart } from "@/components/ui/LineChart";
 import Loading from "@/components/Loading";
 import { DonutChart } from "@/components/ui/PieChart";
+import ProgressBar from "@/components/ProgressBar";
 
 export default function Dashboard() {
   const [isLoading, setIsLoading] = useState(true);

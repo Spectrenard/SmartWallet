@@ -4,6 +4,7 @@ import Loading from "@/components/Loading";
 import { DonutChart } from "@/components/ui/PieChart";
 import { useState, useEffect } from "react";
 import { ArrowUpCircle, ArrowDownCircle, Euro } from "lucide-react";
+import ProgressBar from "@/components/ProgressBar";
 
 export default function Budgets() {
   const [isLoading, setIsLoading] = useState(true);
@@ -97,6 +98,7 @@ export default function Budgets() {
           <DonutChart />
         </div>
       </div>
+      <ProgressBar />
     </main>
   );
 }
