@@ -35,9 +35,11 @@ export function Sidebar() {
     <>
       {isMobile && (
         <nav className="fixed top-0 left-0 right-0 bg-customColor-800 text-white h-16 flex items-center justify-between px-4 z-50">
-          <h1 className="text-2xl font-extrabold tracking-tight font-audiowide text-gray-200">
-            SmartWallet
-          </h1>
+          <Link href="/dashboard">
+            <h1 className="text-2xl font-extrabold tracking-tight font-audiowide text-gray-200 cursor-pointer">
+              SmartWallet
+            </h1>
+          </Link>
           <button
             onClick={toggleSidebar}
             className="p-2 bg-customColor-700 rounded-md"
