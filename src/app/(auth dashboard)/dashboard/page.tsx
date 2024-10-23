@@ -52,11 +52,13 @@ export default function Dashboard() {
           </h2>
           <RecentTransactions transactions={transactions} />
         </div>
-        <div className="bg-customColor-800 rounded-lg shadow-md p-4">
-          <h2 className=" text-xl mb-4 text-customColor-300">
-            Progression des dépenses
+        <div className="bg-customColor-800 rounded-lg shadow-md p-4 ">
+          <h2 className="text-xl  mb-4 text-customColor-300">
+            État des budgets
           </h2>
-          <ProgressBar />
+          <div className="flex justify-center">
+            <ProgressBar />
+          </div>
         </div>
       </div>
 

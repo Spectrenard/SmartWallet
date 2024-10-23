@@ -63,20 +63,6 @@ export function Sidebar() {
               Transactions
             </Link>
           </li>
-          <li>
-            <Link
-              href="/abonnements"
-              className={`flex items-center gap-2 p-3 rounded-md transition-all duration-200 ${
-                activeLink === "abonnements"
-                  ? "bg-emerald-600"
-                  : "hover:bg-emerald-600"
-              }`}
-              onClick={() => handleLinkClick("abonnements")}
-            >
-              <ReceiptEuro className="h-5 w-5" />
-              Abonnements
-            </Link>
-          </li>
         </ul>
       </nav>
 
