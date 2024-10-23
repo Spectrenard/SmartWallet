@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
-import prisma from "../../../../../lib/prisma"; // Importez l'instance Prisma depuis le fichier centralisé
+import prisma from "@/lib/prisma";
 
 export async function POST(req: Request) {
   console.log("Début de la fonction POST");
@@ -51,12 +51,12 @@ export async function POST(req: Request) {
 
     return response;
   } catch (error) {
-    console.error("Erreur de connexion", error);
+    console.error("Erreur détaillée:", error);
     return NextResponse.json(
       { message: "Erreur lors de la connexion", error: String(error) },
       { status: 500 }
     );
   } finally {
-    await prisma.$disconnect(); // Assurez-vous de déconnecter Prisma après chaque requête
+    await prisma.$disconnect();
   }
 }
