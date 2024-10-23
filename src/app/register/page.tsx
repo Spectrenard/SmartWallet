@@ -72,11 +72,13 @@ const Register = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-r from-black to-slate-900 text-white flex flex-col items-center justify-center py-8">
-      <h1 className="text-4xl mb-6 font-bold">Inscription</h1>
+    <div className="min-h-screen bg-gradient-to-r from-black to-slate-900 text-white flex flex-col items-center justify-center p-4 sm:p-8">
+      <h1 className="text-3xl sm:text-4xl mb-4 sm:mb-6 font-bold">
+        Inscription
+      </h1>
       <form
         onSubmit={handleSubmit}
-        className="bg-gray-800 bg-opacity-80 p-8 rounded-lg shadow-lg w-full max-w-sm backdrop-blur-md"
+        className="bg-gray-800 bg-opacity-80 p-6 sm:p-8 rounded-lg shadow-lg w-full max-w-xs sm:max-w-sm md:max-w-md backdrop-blur-md"
       >
         {error && <p className="text-red-400 mb-4 text-center">{error}</p>}
         {successMessage && (
@@ -121,7 +123,7 @@ const Register = () => {
           {loading ? "Chargement..." : "S'inscrire"}
         </button>
       </form>
-      <p className="mt-4 text-sm">
+      <p className="mt-4 text-xs sm:text-sm">
         Déjà un compte ?{" "}
         <a href="/login" className="text-blue-300 hover:underline">
           Connexion
