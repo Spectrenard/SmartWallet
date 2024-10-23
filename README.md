@@ -9,7 +9,8 @@ SmartWallet est une application web de gestion financière personnelle développ
 - Configuration et suivi des budgets par catégorie
 - Visualisation des dépenses avec des graphiques interactifs
 - Système d'authentification sécurisé
-![Uploading Capture d’écran 2024-10-22 à 14.28.01.png…]()
+
+![Capture d’écran 2024-10-23 à 23 07 22](https://github.com/user-attachments/assets/3e960c87-0b26-4150-a057-d6a6fe06e019)
 
 
 ## Technologies utilisées
