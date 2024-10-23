@@ -3,19 +3,20 @@ import bcrypt from "bcrypt";
 import { PrismaClient } from "@prisma/client";
 import jwt from "jsonwebtoken";
 
+// Déplacer l'initialisation de PrismaClient en dehors de la fonction
 const prisma = new PrismaClient();
 
 export async function POST(req: Request) {
-  const { email, password } = await req.json();
-
-  if (!email || !password) {
-    return NextResponse.json(
-      { message: "Un mail et un mot de passe sont requis!" },
-      { status: 400 }
-    );
-  }
-
   try {
+    const { email, password } = await req.json();
+
+    if (!email || !password) {
+      return NextResponse.json(
+        { message: "Un mail et un mot de passe sont requis!" },
+        { status: 400 }
+      );
+    }
+
     const user = await prisma.user.findUnique({ where: { email } });
 
     if (!user) {
@@ -54,5 +55,8 @@ export async function POST(req: Request) {
       { message: "Erreur lors de la connexion", error: String(error) },
       { status: 500 }
     );
+  } finally {
+    // Assurez-vous de déconnecter le client Prisma après chaque requête
+    await prisma.$disconnect();
   }
 }
