@@ -1,7 +1,7 @@
 "use client";
 import BudgetForm from "@/components/BudgetForm";
 import Loading from "@/components/Loading";
-import { DonutChart } from "@/components/ui/PieChart";
+import { DonutChart as PieChart } from "@/components/ui/PieChart";
 import { useState, useEffect } from "react";
 import { ArrowUpCircle, ArrowDownCircle, Euro } from "lucide-react";
 
@@ -100,7 +100,7 @@ export default function Budgets() {
           <h2 className="text-lg sm:text-xl font-bold mb-4 text-transparent bg-clip-text bg-gradient-to-r from-gray-600 to-gray-100">
             Aperçu
           </h2>
-          <DonutChart />
+          <PieChart />
         </div>
       </div>
     </main>
