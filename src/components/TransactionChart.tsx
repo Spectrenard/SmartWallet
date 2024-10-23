@@ -64,6 +64,7 @@ const TransactionChart: React.FC<TransactionChartProps> = ({
   const [transactions, setTransactions] = useState<TransactionChart[]>([]);
   const [months, setMonths] = useState<string[]>([]);
   const [isActive, setIsActive] = useState(true);
+  const [isOpen, setIsOpen] = useState(false);
 
   const fetchTransactions = useCallback(async () => {
     if (!isActive) return;
@@ -145,17 +146,34 @@ const TransactionChart: React.FC<TransactionChartProps> = ({
         <h3 className="text-lg md:text-xl font-bold mb-2 md:mb-0 text-transparent bg-clip-text bg-gradient-to-r from-gray-600 to-gray-100">
           Graphique des Dépenses
         </h3>
-        <select
-          value={selectedMonth}
-          onChange={handleMonthSelect}
-          className="bg-customColor-700 text-customColor-300 p-2 rounded outline-none w-full md:w-auto"
-        >
-          {months.map((month) => (
-            <option key={month} value={month}>
-              {format(new Date(`${month}-01`), "MMMM yyyy", { locale: fr })}
-            </option>
-          ))}
-        </select>
+        <div className="relative w-full md:w-auto">
+          <button
+            type="button"
+            onClick={() => setIsOpen(!isOpen)}
+            className="bg-customColor-700 text-customColor-300 p-2 rounded outline-none w-full md:w-auto text-base md:text-sm h-10 md:h-auto"
+          >
+            {format(new Date(`${selectedMonth}-01`), "MMMM yyyy", {
+              locale: fr,
+            })}
+          </button>
+          {isOpen && (
+            <div className="absolute z-10 w-full mt-1 bg-customColor-400 rounded-md shadow-lg">
+              {months.map((month) => (
+                <button
+                  key={month}
+                  type="button"
+                  onClick={() => {
+                    setSelectedMonth(month);
+                    setIsOpen(false);
+                  }}
+                  className="block w-full px-4 py-2 text-left hover:bg-customColor-600"
+                >
+                  {format(new Date(`${month}-01`), "MMMM yyyy", { locale: fr })}
+                </button>
+              ))}
+            </div>
+          )}
+        </div>
       </div>
       {filteredTransactions.length === 0 ? (
         <p className="text-center text-white mt-4">
