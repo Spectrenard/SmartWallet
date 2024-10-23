@@ -1,36 +1,45 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# SmartWallet
 
-## Getting Started
+SmartWallet est une application web de gestion financière personnelle développée avec Next.js. Elle permet aux utilisateurs de suivre leurs dépenses, gérer leurs budgets et visualiser leurs transactions de manière intuitive.
 
-First, run the development server:
+## Fonctionnalités principales
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+- Tableau de bord avec aperçu des finances
+- Gestion des transactions (ajout, modification, suppression)
+- Configuration et suivi des budgets par catégorie
+- Visualisation des dépenses avec des graphiques interactifs
+- Système d'authentification sécurisé
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Technologies utilisées
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+- Next.js
+- React
+- TypeScript
+- Prisma (ORM)
+- Tailwind CSS
+- Recharts (pour les graphiques)
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Installation
 
-## Learn More
+1. Clonez le dépôt
+2. Installez les dépendances : `npm install`
+3. Configurez votre base de données dans le fichier `.env`
+4. Lancez les migrations Prisma : `npx prisma migrate dev`
+5. Démarrez le serveur de développement : `npm run dev`
 
-To learn more about Next.js, take a look at the following resources:
+## Structure du projet
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Le projet suit la structure standard d'une application Next.js, avec quelques dossiers spécifiques :
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+- `/src/app` : Pages et routes de l'application
+- `/src/components` : Composants React réutilisables
+- `/src/lib` : Utilitaires et fonctions helpers
+- `/prisma` : Schéma et migrations de la base de données
 
-## Deploy on Vercel
+## Contribution
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+Les contributions sont les bienvenues ! N'hésitez pas à ouvrir une issue ou à soumettre une pull request.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## Licence
+
+Ce projet est sous licence MIT. Voir le fichier `LICENSE` pour plus de détails.
