@@ -1,7 +1,7 @@
 "use client";
 import * as React from "react";
 import { useEffect, useState } from "react";
-import { PieChart, Pie, Label } from "recharts";
+import { PieChart as RechartsRieChart, Pie, Label } from "recharts";
 import { InfoIcon } from "lucide-react";
 import {
   Card,
@@ -32,7 +32,7 @@ const categoryColors: { [key: string]: string } = {
   Transports: "#6366f1",
   Autre: "#94a3b8",
 };
-export function DonutChart() {
+export function BudgetPieChart() {
   const [chartData, setChartData] = useState<BudgetData[]>([]);
   useEffect(() => {
     const fetchBudgets = async () => {
@@ -85,7 +85,7 @@ export function DonutChart() {
           config={chartConfig}
           className="mx-auto aspect-square w-full max-w-[300px]"
         >
-          <PieChart>
+          <RechartsRieChart>
             <ChartTooltip
               cursor={false}
               content={<ChartTooltipContent hideLabel />}
@@ -128,7 +128,7 @@ export function DonutChart() {
                 }}
               />
             </Pie>
-          </PieChart>
+          </RechartsRieChart>
         </ChartContainer>
       </CardContent>
       <CardFooter className="flex-col gap-2 text-xs sm:text-sm pt-4 sm:pt-6">
