@@ -43,10 +43,12 @@ export async function POST(req: Request) {
 
     const response = NextResponse.json({ message: "Connexion réussie!" });
     response.cookies.set("token", token, {
-      httpOnly: false,
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "production",
       maxAge: 24 * 60 * 60,
       path: "/",
       sameSite: "lax",
+      domain: process.env.NODE_ENV === "production" ? ".vercel.app" : undefined,
     });
 
     return response;
