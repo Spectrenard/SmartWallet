@@ -8,6 +8,9 @@ interface RootLayoutProps {
 export default function RootLayout({ children }: RootLayoutProps) {
   return (
     <html lang="fr">
+      <head>
+        <link rel="icon" href="/favicon.ico" sizes="any" />
+      </head>
       <body className="flex">
         <main className="flex-1">{children}</main>
       </body>
