@@ -34,24 +34,28 @@ export function Sidebar() {
   return (
     <>
       {isMobile && (
-        <button
-          onClick={toggleSidebar}
-          className="fixed top-4 left-4 z-50 p-2 bg-customColor-800 rounded-md"
-        >
-          <Menu className="h-6 w-6 text-white" />
-        </button>
+        <nav className="fixed top-0 left-0 right-0 bg-customColor-800 text-white h-16 flex items-center justify-between px-4 z-50">
+          <h1 className="text-2xl font-extrabold tracking-tight font-audiowide text-gray-200">
+            SmartWallet
+          </h1>
+          <button
+            onClick={toggleSidebar}
+            className="p-2 bg-customColor-700 rounded-md"
+          >
+            <Menu className="h-6 w-6 text-white" />
+          </button>
+        </nav>
       )}
       <aside
         className={`bg-customColor-800 text-white min-h-screen w-72 flex flex-col rounded-r-2xl shadow-lg fixed transition-all duration-300 ease-in-out ${
           isOpen ? "left-0" : "-left-72"
-        } ${isMobile ? "z-40" : ""}`}
+        } ${isMobile ? "z-40 top-16" : "top-0"}`}
       >
-        <div className="flex items-center pl-7 h-16 border-gray-700 rounded-t-lg">
-          <h1 className="text-3xl font-extrabold tracking-tight font-audiowide text-gray-200">
+        {!isMobile && (
+          <h1 className="text-2xl font-extrabold tracking-tight font-audiowide text-gray-200 p-4">
             SmartWallet
           </h1>
-        </div>
-
+        )}
         <nav className="flex-1 p-4 rounded-b-lg">
           <ul className="flex flex-col gap-4">
             <li>

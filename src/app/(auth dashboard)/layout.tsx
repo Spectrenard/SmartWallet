@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 import { Sidebar } from "@/components/sidebar";
 
 type RootLayoutProps = {
-  children: React.ReactNode; // Définir le type pour les enfants
+  children: React.ReactNode;
 };
 
 export default function RootLayout({ children }: RootLayoutProps) {
@@ -22,7 +22,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
   return (
     <div className="flex bg-gradient-to-br bg-customColor-900 min-h-screen">
       <Sidebar />
-      <main className={`flex-1 p-6 ${isMobile ? "ml-0" : "ml-72"}`}>
+      <main className={`flex-1 p-6 ${isMobile ? "mt-16" : "mt-0 ml-72"}`}>
         {children}
       </main>
     </div>
