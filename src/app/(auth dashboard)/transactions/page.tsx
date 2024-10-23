@@ -36,7 +36,7 @@ export default function Transactions() {
       <TransactionsComponent />
       <ToastContainer
         position="bottom-center"
-        autoClose={5000}
+        autoClose={3000}
         hideProgressBar={false}
         newestOnTop={false}
         closeOnClick
@@ -44,8 +44,10 @@ export default function Transactions() {
         pauseOnFocusLoss
         draggable
         pauseOnHover
-        theme="colored"
-        className="custom-toast-container"
+        theme="dark"
+        className="!bottom-4 sm:!bottom-8"
+        toastClassName="!bg-customColor-400 !text-white !rounded-lg !shadow-lg !p-4"
+        bodyClassName="!text-sm !font-medium"
       />
     </main>
   );
