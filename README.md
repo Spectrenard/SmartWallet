@@ -9,6 +9,8 @@ SmartWallet est une application web de gestion financière personnelle développ
 - Configuration et suivi des budgets par catégorie
 - Visualisation des dépenses avec des graphiques interactifs
 - Système d'authentification sécurisé
+![Uploading Capture d’écran 2024-10-22 à 14.28.01.png…]()
+
 
 ## Technologies utilisées
 
@@ -35,11 +37,3 @@ Le projet suit la structure standard d'une application Next.js, avec quelques do
 - `/src/components` : Composants React réutilisables
 - `/src/lib` : Utilitaires et fonctions helpers
 - `/prisma` : Schéma et migrations de la base de données
-
-## Contribution
-
-Les contributions sont les bienvenues ! N'hésitez pas à ouvrir une issue ou à soumettre une pull request.
-
-## Licence
-
-Ce projet est sous licence MIT. Voir le fichier `LICENSE` pour plus de détails.
