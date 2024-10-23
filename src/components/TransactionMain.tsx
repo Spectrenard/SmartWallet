@@ -109,9 +109,9 @@ const TransactionsMain: React.FC<TransactionsMainProps> = ({
   );
 
   return (
-    <div className="flex flex-row-reverse gap-6 max-md:flex max-md:flex-col">
-      <div className="bg-customColor-800 rounded-lg p-10 w-1/2">
-        <h2 className="text-xl font-bold mb-4 text-transparent bg-clip-text bg-gradient-to-r from-gray-600 to-gray-100">
+    <div className="flex flex-col md:flex-row-reverse gap-4 md:gap-6">
+      <div className="bg-customColor-800 rounded-lg p-4 md:p-10 w-full md:w-1/2">
+        <h2 className="text-lg md:text-xl font-bold mb-4 text-transparent bg-clip-text bg-gradient-to-r from-gray-600 to-gray-100">
           Aperçu
         </h2>
         <TransactionList
@@ -122,7 +122,7 @@ const TransactionsMain: React.FC<TransactionsMainProps> = ({
         />
       </div>
 
-      <div className="w-2/3">
+      <div className="w-full md:w-2/3">
         <TransactionChart
           chartDataArray={chartDataArray}
           chartConfig={chartConfig}

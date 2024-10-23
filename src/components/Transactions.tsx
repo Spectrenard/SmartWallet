@@ -110,8 +110,8 @@ export default function Transactions() {
     });
   };
   return (
-    <main className="min-h-screen flex flex-col mt-7 text-white">
-      <div className="max-w-xl">
+    <main className="min-h-screen flex flex-col mt-4 md:mt-7 text-white">
+      <div className="w-full md:max-w-xl">
         <AddTransactionForm
           amount={amount}
           setAmount={setAmount}

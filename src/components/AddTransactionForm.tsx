@@ -49,23 +49,23 @@ const AddTransactionForm: React.FC<AddTransactionFormProps> = ({
     }
   };
   return (
-    <div className="bg-customColor-800 rounded-lg p-6 mb-10 max-w-2xl w-full">
-      <h2 className="text-xl font-bold mb-4 text-transparent bg-clip-text bg-gradient-to-r from-gray-600 to-gray-100">
+    <div className="bg-customColor-800 rounded-lg p-4 md:p-6 mb-6 md:mb-10 w-full">
+      <h2 className="text-lg md:text-xl font-bold mb-4 text-transparent bg-clip-text bg-gradient-to-r from-gray-600 to-gray-100">
         Ajouter un montant
       </h2>
-      <form onSubmit={onSubmit} className="flex flex-col md:flex-row gap-4">
+      <form onSubmit={onSubmit} className="flex flex-col gap-4">
         <input
           type="number"
           value={amount}
           onChange={(e) => setAmount(e.target.value)}
           placeholder="Montant"
           required
-          className="p-2 rounded bg-customColor-700 text-gray-500 flex-1 placeholder-gray-400 placeholder-opacity-100 focus:outline-none focus:ring-2 focus:ring-customColor-500"
+          className="p-2 rounded bg-customColor-700 text-gray-500 w-full placeholder-gray-400 placeholder-opacity-100 focus:outline-none focus:ring-2 focus:ring-customColor-500"
         />
         <select
           value={category}
           onChange={(e) => setCategory(e.target.value)}
-          className="p-2 rounded bg-customColor-700 text-gray-500 flex-1 md:max-w-xs focus:outline-none focus:ring-2 focus:ring-customColor-500"
+          className="p-2 rounded bg-customColor-700 text-gray-500 w-full focus:outline-none focus:ring-2 focus:ring-customColor-500"
         >
           <option
             className="bg-customcolor-700 text-gray-300"

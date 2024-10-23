@@ -83,3 +83,49 @@
     @apply bg-background text-foreground;
   }
 }
+
+.custom-toast-container {
+  width: 100% !important;
+  max-width: 90vw !important;
+  padding: 0 !important;
+  bottom: 0 !important;
+}
+
+@media (min-width: 640px) {
+  .custom-toast-container {
+    width: auto !important;
+    max-width: 350px !important;
+    bottom: 1rem !important;
+    right: 1rem !important;
+  }
+}
+
+.Toastify__toast {
+  font-size: 12px !important;
+  padding: 6px 10px !important;
+  margin-bottom: 0.25rem !important;
+  border-radius: 4px !important;
+}
+
+@media (min-width: 640px) {
+  .Toastify__toast {
+    font-size: 14px !important;
+    padding: 10px 14px !important;
+    margin-bottom: 0.5rem !important;
+  }
+}
+
+.Toastify__toast-body {
+  padding: 0 !important;
+}
+
+.Toastify__close-button {
+  padding: 0 !important;
+  align-self: center !important;
+  font-size: 16px !important;
+}
+
+.Toastify__toast-icon {
+  width: 18px !important;
+  height: 18px !important;
+}

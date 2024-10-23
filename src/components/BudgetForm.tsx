@@ -114,16 +114,18 @@ export default function BudgetForm() {
   return (
     <div className="flex flex-col">
       <form onSubmit={handleSubmit} className="w-full">
-        <h1 className="text-customColor-300 text-md font-bold pt-4 pb-4">
-          {" "}
-          Visualisez et configurer vos budgets
+        <h1 className="text-customColor-300 text-sm sm:text-md font-bold pt-2 sm:pt-4 pb-2 sm:pb-4">
+          Visualisez et configurez vos budgets
         </h1>
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-12">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 lg:gap-8">
           {categories.map((category) => (
-            <div key={category} className="bg-customColor-700 p-4 rounded-lg">
+            <div
+              key={category}
+              className="bg-customColor-700 p-3 sm:p-4 rounded-lg"
+            >
               <label
                 htmlFor={`budget-${category}`}
-                className="text-white text-lg font-medium block mb-2"
+                className="text-white text-base sm:text-lg font-medium block mb-1 sm:mb-2"
               >
                 {category}
               </label>
@@ -134,26 +136,30 @@ export default function BudgetForm() {
                   id={`budget-${category}`}
                   value={budgets[category] || ""}
                   onChange={(e) => handleBudgetChange(category, e.target.value)}
-                  className="w-full p-2 pl-8 rounded bg-customColor-600 text-white focus:outline-none focus:ring-2 focus:ring-emerald-500"
+                  className="w-full p-2 pl-7 sm:pl-8 rounded bg-customColor-600 text-white text-sm sm:text-base focus:outline-none focus:ring-2 focus:ring-emerald-500"
                 />
                 <Euro
                   className="absolute left-2 top-1/2 transform -translate-y-1/2 text-emerald-500"
-                  size={20}
+                  size={16}
                 />
               </div>
             </div>
           ))}
         </div>
-        <div className="text-center mt-16">
+        <div className="text-center mt-8 sm:mt-12 lg:mt-16">
           <Btn text="Valider" />
         </div>
         {submitStatus && (
-          <p className="text-green-500 text-center mt-4">
+          <p className="text-green-500 text-center mt-4 text-sm sm:text-base">
             {submitStatus}
             <span className="ml-2">Mise à jour en cours...</span>
           </p>
         )}
-        {error && <p className="text-red-500 text-center mt-4">{error}</p>}
+        {error && (
+          <p className="text-red-500 text-center mt-4 text-sm sm:text-base">
+            {error}
+          </p>
+        )}
       </form>
     </div>
   );

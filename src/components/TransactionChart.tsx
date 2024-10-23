@@ -140,15 +140,15 @@ const TransactionChart: React.FC<TransactionChartProps> = ({
     .sort((a, b) => b.amount - a.amount);
 
   return (
-    <div className="bg-customColor-800 text-white rounded-lg p-10">
-      <div className="flex justify-between">
-        <h3 className="text-xl font-bold mb-4 text-transparent bg-clip-text bg-gradient-to-r from-gray-600 to-gray-100">
+    <div className="bg-customColor-800 text-white rounded-lg p-4 md:p-10">
+      <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-4">
+        <h3 className="text-lg md:text-xl font-bold mb-2 md:mb-0 text-transparent bg-clip-text bg-gradient-to-r from-gray-600 to-gray-100">
           Graphique des Dépenses
         </h3>
         <select
           value={selectedMonth}
           onChange={handleMonthSelect}
-          className="bg-customColor-700 text-customColor-300 p-2 rounded outline-none"
+          className="bg-customColor-700 text-customColor-300 p-2 rounded outline-none w-full md:w-auto"
         >
           {months.map((month) => (
             <option key={month} value={month}>
@@ -163,11 +163,11 @@ const TransactionChart: React.FC<TransactionChartProps> = ({
         </p>
       ) : (
         <ChartContainer config={chartConfig}>
-          <ResponsiveContainer width="100%" height={400}>
+          <ResponsiveContainer width="100%" height={300} className="mt-4">
             <BarChart
               data={filteredData}
               layout="vertical"
-              margin={{ top: 20, right: 30, bottom: 5 }}
+              margin={{ top: 20, right: 30, left: 20, bottom: 5 }}
             >
               <YAxis
                 dataKey="category"

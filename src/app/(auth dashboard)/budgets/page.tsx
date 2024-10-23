@@ -4,7 +4,6 @@ import Loading from "@/components/Loading";
 import { DonutChart } from "@/components/ui/PieChart";
 import { useState, useEffect } from "react";
 import { ArrowUpCircle, ArrowDownCircle, Euro } from "lucide-react";
-import ProgressBar from "@/components/ProgressBar";
 
 export default function Budgets() {
   const [isLoading, setIsLoading] = useState(true);
@@ -49,35 +48,41 @@ export default function Budgets() {
   }
 
   return (
-    <main className="p-4 flex flex-col gap-6">
-      <h1 className="text-white text-3xl font-medium mb-2">
+    <main className="sm:p-4 flex flex-col gap-6">
+      <h1 className="text-white text-2xl sm:text-3xl font-medium mb-2">
         Gérez vos budgets
       </h1>
 
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
-        <div className="bg-customColor-800 p-4 rounded-lg  flex items-center">
-          <Euro className="text-emerald-500 mr-4" size={32} />
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 mb-6">
+        <div className="bg-customColor-800 p-3 sm:p-4 rounded-lg flex items-center">
+          <Euro className="text-emerald-500 mr-2 sm:mr-4 w-6 h-6 sm:w-8 sm:h-8" />
           <div>
-            <p className="text-customColor-400">Budget total</p>
-            <p className="text-white text-2xl ">
+            <p className="text-customColor-400 text-sm sm:text-base">
+              Budget total
+            </p>
+            <p className="text-white text-lg sm:text-xl lg:text-2xl">
               {budgetSummary.total.toFixed(2)} €
             </p>
           </div>
         </div>
-        <div className="bg-customColor-800 p-4 rounded-lg  flex items-center">
-          <ArrowUpCircle className="text-red-500 mr-4" size={32} />
+        <div className="bg-customColor-800 p-3 sm:p-4 rounded-lg flex items-center">
+          <ArrowUpCircle className="text-red-500 mr-2 sm:mr-4 w-6 h-6 sm:w-8 sm:h-8" />
           <div>
-            <p className="text-customColor-400">Budget la plus élevée</p>
-            <p className="text-white text-xl ">
+            <p className="text-customColor-400 text-sm sm:text-base">
+              Budget le plus élevé
+            </p>
+            <p className="text-white text-lg sm:text-xl lg:text-2xl">
               {budgetSummary.highestCategory}
             </p>
           </div>
         </div>
-        <div className="bg-customColor-800 p-4 rounded-lg  flex items-center">
-          <ArrowDownCircle className="text-blue-500 mr-4" size={32} />
+        <div className="bg-customColor-800 p-3 sm:p-4 rounded-lg flex items-center">
+          <ArrowDownCircle className="text-blue-500 mr-2 sm:mr-4 w-6 h-6 sm:w-8 sm:h-8" />
           <div>
-            <p className="text-customColor-400">Budget la plus basse</p>
-            <p className="text-white text-xl ">
+            <p className="text-customColor-400 text-sm sm:text-base">
+              Budget le plus bas
+            </p>
+            <p className="text-white text-lg sm:text-xl lg:text-2xl">
               {budgetSummary.lowestCategory}
             </p>
           </div>
@@ -85,14 +90,14 @@ export default function Budgets() {
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        <div className="lg:col-span-2 bg-customColor-800 p-6 rounded-lg shadow-lg">
-          <h1 className="text-xl font-bold  mb-4 text-transparent bg-clip-text bg-gradient-to-r from-gray-600 to-gray-100">
+        <div className="lg:col-span-2 bg-customColor-800 p-4 sm:p-6 rounded-lg shadow-lg">
+          <h2 className="text-lg sm:text-xl font-bold mb-4 text-transparent bg-clip-text bg-gradient-to-r from-gray-600 to-gray-100">
             Définir vos budgets
-          </h1>
+          </h2>
           <BudgetForm />
         </div>
-        <div className="bg-customColor-800 p-6 rounded-lg shadow-lg">
-          <h2 className="text-xl font-bold  mb-4 text-transparent bg-clip-text bg-gradient-to-r from-gray-600 to-gray-100">
+        <div className="bg-customColor-800 p-4 sm:p-6 rounded-lg shadow-lg">
+          <h2 className="text-lg sm:text-xl font-bold mb-4 text-transparent bg-clip-text bg-gradient-to-r from-gray-600 to-gray-100">
             Aperçu
           </h2>
           <DonutChart />

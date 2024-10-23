@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 import TransactionsComponent from "@/components/Transactions";
 import "react-toastify/dist/ReactToastify.css";
 import React from "react";
-import { ToastContainer } from "react-toastify";
+import { ToastContainer, toast } from "react-toastify";
 import Loading from "@/components/Loading";
 
 export default function Transactions() {
@@ -29,12 +29,24 @@ export default function Transactions() {
   }
 
   return (
-    <main className="min-h-screen p-4 flex flex-col">
-      <h1 className="text-white text-3xl font-medium mb-6">
+    <main className="min-h-screen sm:p-4 flex flex-col">
+      <h1 className="text-white text-2xl md:text-3xl font-medium mb-4 md:mb-6">
         Gérez vos transactions
       </h1>
       <TransactionsComponent />
-      <ToastContainer />
+      <ToastContainer
+        position="bottom-center"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="colored"
+        className="custom-toast-container"
+      />
     </main>
   );
 }

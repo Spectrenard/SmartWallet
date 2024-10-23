@@ -73,17 +73,17 @@ export function DonutChart() {
   return (
     <Card className="flex flex-col bg-customColor-800 border-none shadow-none">
       <CardHeader className="items-center pb-0">
-        <CardTitle className="text-customColor-300  text-md">
+        <CardTitle className="text-customColor-300 text-sm sm:text-md">
           Répartition des budgets
         </CardTitle>
-        <CardDescription className="text-customColor-400">
+        <CardDescription className="text-customColor-400 text-xs sm:text-sm">
           Par catégorie
         </CardDescription>
       </CardHeader>
       <CardContent className="flex-1 pb-0">
         <ChartContainer
           config={chartConfig}
-          className="mx-auto aspect-square max-h-[300px]"
+          className="mx-auto aspect-square w-full max-w-[300px]"
         >
           <PieChart>
             <ChartTooltip
@@ -94,9 +94,9 @@ export function DonutChart() {
               data={chartData}
               dataKey="amount"
               nameKey="category"
-              innerRadius={70}
-              outerRadius={100}
-              strokeWidth={5}
+              innerRadius="50%"
+              outerRadius="80%"
+              strokeWidth={3}
             >
               <Label
                 content={({ viewBox }) => {
@@ -111,14 +111,14 @@ export function DonutChart() {
                         <tspan
                           x={viewBox.cx}
                           y={viewBox.cy}
-                          className="fill-white text-4xl font-bold"
+                          className="fill-white text-2xl sm:text-3xl font-bold"
                         >
                           {totalBudget.toLocaleString()}
                         </tspan>
                         <tspan
                           x={viewBox.cx}
-                          y={(viewBox.cy || 0) + 28}
-                          className="fill-white text-xl"
+                          y={(viewBox.cy || 0) + 20}
+                          className="fill-white text-lg sm:text-xl"
                         >
                           €
                         </tspan>
@@ -131,10 +131,10 @@ export function DonutChart() {
           </PieChart>
         </ChartContainer>
       </CardContent>
-      <CardFooter className="flex-col gap-2 text-sm pt-6">
+      <CardFooter className="flex-col gap-2 text-xs sm:text-sm pt-4 sm:pt-6">
         <div className="flex items-center gap-2 font-medium leading-none text-customColor-300">
-          <InfoIcon className="h-4 w-4" /> Budget total pour toutes les
-          catégories
+          <InfoIcon className="h-3 w-3 sm:h-4 sm:w-4" /> Budget total pour
+          toutes les catégories
         </div>
         <div className="leading-none text-customColor-400">
           Cliquez sur une catégorie pour voir les détails
