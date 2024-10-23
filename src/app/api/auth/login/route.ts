@@ -1,22 +1,24 @@
 import { NextResponse } from "next/server";
 import bcrypt from "bcrypt";
-import { PrismaClient } from "@prisma/client";
 import jwt from "jsonwebtoken";
-
-const prisma = new PrismaClient();
+import prisma from "../../../../../lib/prisma"; // Importez l'instance Prisma depuis le fichier centralisé
 
 export async function POST(req: Request) {
-  const { email, password } = await req.json();
-
-  if (!email || !password) {
-    return NextResponse.json(
-      { message: "Un mail et un mot de passe sont requis!" },
-      { status: 400 }
-    );
-  }
+  console.log("Début de la fonction POST");
 
   try {
+    const { email, password } = await req.json();
+
+    if (!email || !password) {
+      return NextResponse.json(
+        { message: "Un mail et un mot de passe sont requis!" },
+        { status: 400 }
+      );
+    }
+
+    console.log("Tentative de connexion à la base de données");
     const user = await prisma.user.findUnique({ where: { email } });
+    console.log("Connexion à la base de données réussie");
 
     if (!user) {
       return NextResponse.json(
@@ -54,5 +56,7 @@ export async function POST(req: Request) {
       { message: "Erreur lors de la connexion", error: String(error) },
       { status: 500 }
     );
+  } finally {
+    await prisma.$disconnect(); // Assurez-vous de déconnecter Prisma après chaque requête
   }
 }
