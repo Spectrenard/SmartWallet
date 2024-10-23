@@ -1,13 +1,12 @@
 import { NextResponse } from "next/server";
 import bcrypt from "bcrypt";
-import { PrismaClient } from "@prisma/client";
 import jwt from "jsonwebtoken";
-
-// Déplacer l'initialisation de PrismaClient en dehors de la fonction
-const prisma = new PrismaClient();
+import { prisma } from "../../../../../lib/prisma";
 
 export async function POST(req: Request) {
   try {
+    console.log("Début de la fonction POST");
+    console.log("Tentative de connexion à la base de données");
     const { email, password } = await req.json();
 
     if (!email || !password) {
@@ -18,6 +17,7 @@ export async function POST(req: Request) {
     }
 
     const user = await prisma.user.findUnique({ where: { email } });
+    console.log("Connexion à la base de données réussie");
 
     if (!user) {
       return NextResponse.json(
@@ -55,8 +55,5 @@ export async function POST(req: Request) {
       { message: "Erreur lors de la connexion", error: String(error) },
       { status: 500 }
     );
-  } finally {
-    // Assurez-vous de déconnecter le client Prisma après chaque requête
-    await prisma.$disconnect();
   }
 }
