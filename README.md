@@ -29,12 +29,3 @@ SmartWallet est une application web de gestion financière personnelle développ
 3. Configurez votre base de données dans le fichier `.env`
 4. Lancez les migrations Prisma : `npx prisma migrate dev`
 5. Démarrez le serveur de développement : `npm run dev`
-
-## Structure du projet
-
-Le projet suit la structure standard d'une application Next.js, avec quelques dossiers spécifiques :
-
-- `/src/app` : Pages et routes de l'application
-- `/src/components` : Composants React réutilisables
-- `/src/lib` : Utilitaires et fonctions helpers
-- `/prisma` : Schéma et migrations de la base de données
