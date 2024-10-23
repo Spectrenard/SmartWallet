@@ -59,7 +59,7 @@ const RecentTransactions: React.FC<RecentTransactionsProps> = ({
   );
 
   return (
-    <div className="max-h-[400px] overflow-y-auto">
+    <div className="max-h-[200px] sm:max-h-[400px] overflow-y-auto">
       {sortedTransactions.length === 0 ? (
         <p className="text-center text-gray-400">Aucune transaction récente.</p>
       ) : (
@@ -73,15 +73,15 @@ const RecentTransactions: React.FC<RecentTransactionsProps> = ({
           return (
             <div
               key={transaction.id}
-              className="flex justify-between items-center p-6 mb-2 bg-customColor-700 rounded-lg shadow-md"
+              className="flex justify-between items-center p-3 sm:p-6 mb-2 bg-customColor-700 rounded-lg shadow-md"
             >
               <div className="flex items-center flex-1">
                 <span className="mr-2">{icon}</span>
-                <span className="font-normal text-sm text-white">
+                <span className="font-normal text-xs sm:text-sm text-white">
                   {transaction.category}
                 </span>
               </div>
-              <span className={`text-md ${amountColor}`}>
+              <span className={`text-sm sm:text-md ${amountColor}`}>
                 {transaction.amount.toFixed(2)}€
               </span>
             </div>

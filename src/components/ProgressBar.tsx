@@ -65,7 +65,7 @@ const ProgressBar: React.FC = () => {
   };
 
   return (
-    <div className="p-6 space-y-4 rounded-lg w-full bg-customColor-800 max-w-2xl text-white">
+    <div className="p-3 sm:p-6 space-y-3 sm:space-y-4 rounded-lg w-full bg-customColor-800 max-w-2xl text-white">
       {budgets.length === 0 ||
       budgets.every((budget) => budget.amount === 0) ? (
         <p className="text-center">Aucun budget n'est défini pour le moment.</p>
@@ -86,18 +86,18 @@ const ProgressBar: React.FC = () => {
               >
                 <div className="flex justify-between items-center mb-1 text-xs font-medium">
                   <span>{budget.category}</span>
-                  <span>
+                  <span className="text-[10px] sm:text-xs">
                     {spent.toFixed(2)}€ / {budget.amount}€
                   </span>
                 </div>
-                <div className="w-full bg-customColor-500 rounded-lg h-6">
+                <div className="w-full bg-customColor-500 rounded-lg h-4 sm:h-6">
                   <div
                     className={`h-full rounded-lg transition-all duration-300 ${progressColor}`}
                     style={{ width: `${percentage}%` }}
                   ></div>
                 </div>
                 {hoveredCategory === budget.category && (
-                  <div className="absolute left-0 -top-6 bg-white text-black px-2 py-1 rounded shadow-md text-xs">
+                  <div className="absolute left-0 -top-6 bg-white text-black px-2 py-1 rounded shadow-md text-[10px] sm:text-xs">
                     Reste: {(budget.amount - spent).toFixed(2)}€
                   </div>
                 )}

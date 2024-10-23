@@ -33,10 +33,10 @@ const TotalBalance: React.FC = () => {
   );
 
   return (
-    <div className="bg-emerald-700 rounded-lg p-6 mb-10  w-full  shadow-lg">
-      <h2 className="text-xl  text-white">Solde total</h2>
-      <div className="mt-4">
-        <p className="text-3xl text-white">
+    <div className="bg-emerald-700 rounded-lg p-4 sm:p-6 mb-4 sm:mb-10 w-full shadow-lg">
+      <h2 className="text-lg sm:text-xl text-white">Solde total</h2>
+      <div className="mt-2 sm:mt-4">
+        <p className="text-2xl sm:text-3xl text-white">
           {totalBalance.toLocaleString("fr-FR", {
             minimumFractionDigits: 2,
             maximumFractionDigits: 2,

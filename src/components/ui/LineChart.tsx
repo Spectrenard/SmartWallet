@@ -91,16 +91,20 @@ export function DashboardChart() {
   return (
     <Card className="w-full h-full bg-customColor-800 border-none shadow-none">
       <CardHeader>
-        <CardTitle className="text-customColor-300">
+        <CardTitle className="text-customColor-300 text-lg sm:text-xl">
           Revenus et Dépenses Mensuels
         </CardTitle>
-        <CardDescription className="text-customColor-400">
+        <CardDescription className="text-customColor-400 text-xs sm:text-sm">
           Affichage des revenus et dépenses par mois
         </CardDescription>
       </CardHeader>
       <CardContent className="flex-grow">
         <ChartContainer config={chartConfig}>
-          <ResponsiveContainer width="100%" height={300}>
+          <ResponsiveContainer
+            width="100%"
+            height={250}
+            className="sm:h-[300px]"
+          >
             <BarChart data={chartData}>
               <CartesianGrid vertical={false} stroke="#202020" />
               <XAxis
@@ -110,6 +114,8 @@ export function DashboardChart() {
                 axisLine={{ stroke: "#202020" }}
                 tickFormatter={(value) => value.slice(0, 3)}
                 stroke="#202020"
+                fontSize={10}
+                className="sm:text-xs"
               />
               <ChartTooltip
                 cursor={false}
