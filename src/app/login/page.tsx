@@ -15,6 +15,7 @@ const Login = () => {
     setError("");
 
     try {
+      console.log("Tentative de connexion...");
       const response = await fetch("/api/auth/login", {
         method: "POST",
         headers: {
@@ -23,15 +24,19 @@ const Login = () => {
         body: JSON.stringify({ email, password }),
       });
 
+      console.log("Réponse reçue:", response.status);
+      const data = await response.json();
+      console.log("Données reçues:", data);
+
       if (response.ok) {
+        console.log("Connexion réussie, redirection...");
         router.push("/dashboard");
       } else {
-        const data = await response.json();
         setError(data.message || "La connexion a échoué. Veuillez réessayer.");
       }
     } catch (err) {
-      setError("Une erreur s'est produite lors de la connexion.");
       console.error("Erreur de connexion:", err);
+      setError("Une erreur s'est produite lors de la connexion.");
     } finally {
       setLoading(false);
     }
