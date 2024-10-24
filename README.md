@@ -1,6 +1,8 @@
 # SmartWallet
 
-SmartWallet est une application web de gestion financière personnelle développée avec Next.js. Elle permet aux utilisateurs de suivre leurs dépenses, gérer leurs budgets et visualiser leurs transactions de manière intuitive.
+L’objectif de SmartWallet est de simplifier la gestion des finances personnelles. Cette application permet aux utilisateurs de garder une trace de leurs revenus et dépenses, de fixer des budgets et de suivre leur situation financière en temps réel à travers une interface conviviale. L'idée est d'aider à mieux comprendre et contrôler où va l'argent, pour optimiser les habitudes financières.
+
+
 
 ## Fonctionnalités principales
 
