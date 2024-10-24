@@ -18,13 +18,11 @@ export async function middleware(req: NextRequest) {
 
   if (token) {
     try {
-      await jwtVerify(
-        token,
-        new TextEncoder().encode(
-          process.env.JWT_SECRET || "super_secret_key_123"
-        )
+      const secret = new TextEncoder().encode(
+        process.env.JWT_SECRET || "super_secret_key_123"
       );
-      console.log("Token vérifié avec succès");
+      const { payload } = await jwtVerify(token, secret);
+      console.log("Token vérifié avec succès, payload:", payload);
       return NextResponse.next();
     } catch (error) {
       console.error("Erreur de vérification du token:", error);

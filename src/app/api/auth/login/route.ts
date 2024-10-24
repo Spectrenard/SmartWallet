@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import bcrypt from "bcrypt";
-import jwt from "jsonwebtoken";
+import { SignJWT } from "jose";
 import prisma from "@/lib/prisma";
 
 export async function POST(req: Request) {
@@ -36,11 +36,13 @@ export async function POST(req: Request) {
       );
     }
 
-    const token = jwt.sign(
-      { userId: user.id },
-      process.env.JWT_SECRET || "secretkey",
-      { expiresIn: "24h" }
+    const secret = new TextEncoder().encode(
+      process.env.JWT_SECRET || "super_secret_key_123"
     );
+    const token = await new SignJWT({ userId: user.id })
+      .setProtectedHeader({ alg: "HS256" })
+      .setExpirationTime("24h")
+      .sign(secret);
 
     const response = NextResponse.json({
       message: "Connexion réussie!",
