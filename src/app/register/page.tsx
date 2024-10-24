@@ -1,4 +1,5 @@
 "use client";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 
 const Register = () => {
@@ -6,7 +7,8 @@ const Register = () => {
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
-  const [successMessage, setSuccessMessage] = useState(""); // Nouvel état pour le message de succès
+  const [successMessage, setSuccessMessage] = useState("");
+  const router = useRouter();
 
   const MIN_PASSWORD_LENGTH = 6; // Longueur minimale pour le mot de passe
   const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/; // Expression régulière pour l'email
@@ -56,9 +58,10 @@ const Register = () => {
         throw new Error(data.message);
       }
 
-      setSuccessMessage(
-        "Inscription réussie ! Vous pouvez maintenant vous connecter."
-      );
+      setSuccessMessage("Inscription réussie ! Redirection...");
+      setTimeout(() => {
+        router.push("/login");
+      }, 1500);
       console.log("Inscription réussie :", data);
     } catch (err: unknown) {
       if (err instanceof Error) {
