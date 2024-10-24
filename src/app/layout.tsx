@@ -2,7 +2,7 @@ import "./globals.css";
 
 // Définir les types pour les props
 interface RootLayoutProps {
-  children: React.ReactNode; // Utilise React.ReactNode pour le type des enfants
+  children: React.ReactNode;
 }
 
 export default function RootLayout({ children }: RootLayoutProps) {
@@ -11,7 +11,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
       <head>
         <link rel="icon" href="/favicon.ico" sizes="any" />
       </head>
-      <body className="flex">
+      <body className="flex bg-customColor-900 sm:bg-transparent">
         <main className="flex-1">{children}</main>
       </body>
     </html>

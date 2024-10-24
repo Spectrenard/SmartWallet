@@ -47,7 +47,7 @@ export default function Dashboard() {
         <TotalMonthExpense />
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-2 sm:gap-4 md:gap-6">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 sm:gap-4 md:gap-6">
         <div className="bg-customColor-800 rounded-lg shadow-md p-2 sm:p-3 md:p-4">
           <h2 className="text-customColor-300 text-base sm:text-lg md:text-xl mb-2 sm:mb-3 md:mb-4">
             Transactions récentes
@@ -64,7 +64,7 @@ export default function Dashboard() {
         </div>
       </div>
 
-      <div className="bg-customColor-800 rounded-lg shadow-md p-2 sm:p-3 md:p-4">
+      <div className="bg-customColor-800 rounded-lg shadow-md max-sm:mt-6 p-2 sm:p-3 md:p-4">
         <h2 className="text-customColor-300 text-base sm:text-lg md:text-xl mb-2 sm:mb-3 md:mb-4">
           Graphique des dépenses
         </h2>

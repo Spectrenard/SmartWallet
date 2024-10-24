@@ -40,12 +40,15 @@ export function Sidebar() {
               SmartWallet
             </h1>
           </Link>
-          <button
-            onClick={toggleSidebar}
-            className="p-2 bg-customColor-700 rounded-md"
-          >
-            <Menu className="h-6 w-6 text-white" />
-          </button>
+          <div className="flex items-center">
+            <Logout />
+            <button
+              onClick={toggleSidebar}
+              className="p-2 bg-customColor-700 rounded-md"
+            >
+              <Menu className="h-6 w-6 text-white" />
+            </button>
+          </div>
         </nav>
       )}
       <aside
@@ -105,9 +108,11 @@ export function Sidebar() {
           </ul>
         </nav>
 
-        <div className="p-4 border-gray-700">
-          <Logout />
-        </div>
+        {!isMobile && (
+          <div className="p-4 border-gray-700">
+            <Logout />
+          </div>
+        )}
       </aside>
     </>
   );
