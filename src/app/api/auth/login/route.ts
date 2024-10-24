@@ -42,16 +42,19 @@ export async function POST(req: Request) {
       { expiresIn: "24h" }
     );
 
-    const response = NextResponse.json({ message: "Connexion réussie!" });
+    const response = NextResponse.json({
+      message: "Connexion réussie!",
+      isAuthenticated: true,
+    });
     response.cookies.set("token", token, {
       httpOnly: true,
       secure: process.env.NODE_ENV === "production",
       maxAge: 24 * 60 * 60,
       path: "/",
       sameSite: "lax",
-      domain: process.env.NODE_ENV === "production" ? ".vercel.app" : undefined,
     });
 
+    console.log("Cookie défini:", response.cookies.get("token"));
     return response;
   } catch (error) {
     console.error("Erreur détaillée:", error);

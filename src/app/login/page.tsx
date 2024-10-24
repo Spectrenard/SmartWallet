@@ -30,7 +30,14 @@ const Login = () => {
 
       if (response.ok) {
         console.log("Connexion réussie, redirection...");
-        window.location.href = "/dashboard";
+        try {
+          await router.push("/dashboard");
+          console.log("Redirection effectuée");
+        } catch (error) {
+          console.error("Erreur lors de la redirection:", error);
+          // Fallback en cas d'échec de la redirection avec Next.js router
+          window.location.href = "/dashboard";
+        }
       } else {
         setError(data.message || "La connexion a échoué. Veuillez réessayer.");
       }

@@ -12,6 +12,7 @@ export async function middleware(req: NextRequest) {
   );
 
   if (isProtectedRoute && !token) {
+    console.log("Redirection vers /login car pas de token");
     return NextResponse.redirect(new URL("/login", req.url));
   }
 
@@ -23,8 +24,10 @@ export async function middleware(req: NextRequest) {
           process.env.JWT_SECRET || "super_secret_key_123"
         )
       );
+      console.log("Token vérifié avec succès");
       return NextResponse.next();
     } catch (error) {
+      console.error("Erreur de vérification du token:", error);
       return NextResponse.redirect(new URL("/login", req.url));
     }
   }
