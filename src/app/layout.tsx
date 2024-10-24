@@ -11,7 +11,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
       <head>
         <link rel="icon" href="/favicon.ico" sizes="any" />
       </head>
-      <body className="flex bg-customColor-900 sm:bg-transparent">
+      <body className="flex bg-customColor-800 sm:bg-transparent">
         <main className="flex-1">{children}</main>
       </body>
     </html>
