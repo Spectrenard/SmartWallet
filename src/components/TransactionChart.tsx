@@ -71,7 +71,10 @@ const TransactionChart: React.FC<TransactionChartProps> = ({
     try {
       const response = await fetch("/api/transactions");
       const data = await response.json();
+      console.log("Fetched transactions: ", data); // Log pour voir les transactions récupérées
       setTransactions(data);
+
+      // Extraction des mois uniques
       const uniqueMonths = Array.from(
         new Set(
           data.map((transaction: TransactionChart) =>
@@ -79,13 +82,17 @@ const TransactionChart: React.FC<TransactionChartProps> = ({
           )
         )
       ).sort((a, b) => {
-        const dateA = new Date(`${a}-01`);
-        const dateB = new Date(`${b}-01`);
+        const dateA = new Date(`${a}-01T00:00:00`);
+        const dateB = new Date(`${b}-01T00:00:00`);
         return isBefore(dateB, dateA) ? -1 : 1;
       }) as string[];
+
       setMonths(uniqueMonths);
+
+      // Assurer que selectedMonth est dans les mois récupérés
       if (!uniqueMonths.includes(selectedMonth)) {
         setSelectedMonth(uniqueMonths[0]);
+        console.log("Selected month updated to: ", uniqueMonths[0]); // Log pour voir le mois sélectionné
       }
     } catch (error) {
       console.error("Erreur lors de la récupération des transactions:", error);
@@ -113,6 +120,7 @@ const TransactionChart: React.FC<TransactionChartProps> = ({
 
   const handleMonthSelect = (event: React.ChangeEvent<HTMLSelectElement>) => {
     setSelectedMonth(event.target.value);
+    console.log("Month selected: ", event.target.value); // Log pour déboguer la sélection du mois
   };
 
   // Filtrer les transactions par mois sélectionné
@@ -152,10 +160,22 @@ const TransactionChart: React.FC<TransactionChartProps> = ({
             onClick={() => setIsOpen(!isOpen)}
             className="bg-customColor-700 text-customColor-300 p-2 rounded outline-none w-full md:w-auto text-base md:text-sm h-10 md:h-auto"
           >
-            {format(new Date(`${selectedMonth}-01`), "MMMM yyyy", {
-              locale: fr,
-            })}
+            {(() => {
+              const dateString = `${selectedMonth}-01T00:00:00`;
+              const parsedDate = Date.parse(dateString);
+
+              // Vérification si la date est valide
+              if (!isNaN(parsedDate)) {
+                return format(new Date(parsedDate), "MMMM yyyy", {
+                  locale: fr,
+                });
+              } else {
+                console.error("Date invalide:", dateString); // Log pour débogage
+                return "Date invalide";
+              }
+            })()}
           </button>
+
           {isOpen && (
             <div className="absolute z-10 w-full mt-1 bg-customColor-400 rounded-md shadow-lg">
               {months.map((month) => (
@@ -165,10 +185,13 @@ const TransactionChart: React.FC<TransactionChartProps> = ({
                   onClick={() => {
                     setSelectedMonth(month);
                     setIsOpen(false);
+                    console.log("Month changed to: ", month); // Log pour voir les changements de mois
                   }}
                   className="block w-full px-4 py-2 text-left hover:bg-customColor-600"
                 >
-                  {format(new Date(`${month}-01`), "MMMM yyyy", { locale: fr })}
+                  {format(new Date(`${month}-01T00:00:00`), "MMMM yyyy", {
+                    locale: fr,
+                  })}
                 </button>
               ))}
             </div>
