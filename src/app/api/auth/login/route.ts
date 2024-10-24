@@ -8,6 +8,7 @@ export async function POST(req: Request) {
 
   try {
     const { email, password } = await req.json();
+    console.log("Email reçu:", email);
 
     if (!email || !password) {
       return NextResponse.json(
@@ -18,7 +19,7 @@ export async function POST(req: Request) {
 
     console.log("Tentative de connexion à la base de données");
     const user = await prisma.user.findUnique({ where: { email } });
-    console.log("Connexion à la base de données réussie");
+    console.log("Utilisateur trouvé:", user ? "Oui" : "Non");
 
     if (!user) {
       return NextResponse.json(
