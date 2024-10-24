@@ -30,7 +30,7 @@ const Login = () => {
 
       if (response.ok) {
         console.log("Connexion réussie, redirection...");
-        router.push("/dashboard");
+        window.location.href = "/dashboard";
       } else {
         setError(data.message || "La connexion a échoué. Veuillez réessayer.");
       }
