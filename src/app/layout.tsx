@@ -1,6 +1,5 @@
 import "./globals.css";
 import { Analytics } from "@vercel/analytics/react";
-
 // Définir les types pour les props
 interface RootLayoutProps {
   children: React.ReactNode;
