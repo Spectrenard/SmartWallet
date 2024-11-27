@@ -12,6 +12,7 @@ type Category =
   | "Achats & Shopping"
   | "Logement"
   | "Santé"
+  | "Investissements"
   | "Autre";
 
 export default function Transactions() {
@@ -40,6 +41,10 @@ export default function Transactions() {
     Transports: {
       color: "text-white",
       icon: <span>🚌</span>,
+    },
+    Investissements: {
+      color: "text-white",
+      icon: <span>📟</span>,
     },
     Autre: { color: "text-white", icon: <span>🔖</span> },
   };

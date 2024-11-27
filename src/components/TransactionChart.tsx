@@ -49,6 +49,7 @@ const getColorByCategory = (category: string) => {
     Logement: "#0ea5e9",
     Santé: "#ef4444",
     Transports: "#6366f1",
+    Investissements: "#ff5733",
     Autre: "#94a3b8",
   };
   return colors[category as keyof typeof colors] || "#f59e0b";

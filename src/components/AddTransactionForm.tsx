@@ -59,6 +59,7 @@ const AddTransactionForm: React.FC<AddTransactionFormProps> = ({
     "Logement",
     "Santé",
     "Transports",
+    "Investissements",
     "Autre",
   ];
 

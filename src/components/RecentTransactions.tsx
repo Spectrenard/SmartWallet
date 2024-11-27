@@ -19,6 +19,7 @@ type Category =
   | "Achats & Shopping"
   | "Logement"
   | "Santé"
+  | "Investissements"
   | "Autre";
 
 const categoryStyleConfig: Record<
@@ -46,6 +47,10 @@ const categoryStyleConfig: Record<
   Transports: {
     color: "text-white",
     icon: <span>🚌</span>,
+  },
+  Investissements: {
+    color: "text-white",
+    icon: <span>📟</span>,
   },
   Autre: { color: "text-white", icon: <span>🔖</span> },
 };

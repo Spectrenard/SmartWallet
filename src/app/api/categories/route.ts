@@ -8,6 +8,7 @@ const predefinedCategories = [
   "Achats & Shopping",
   "Logement",
   "Santé",
+  "Investissements",
   "Transports",
 ];
 
