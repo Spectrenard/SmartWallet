@@ -1,4 +1,5 @@
 import "./globals.css";
+import { Analytics } from "@vercel/analytics/react";
 
 // Définir les types pour les props
 interface RootLayoutProps {
@@ -13,6 +14,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
       </head>
       <body className="flex bg-customColor-800 sm:bg-transparent">
         <main className="flex-1">{children}</main>
+        <Analytics />
       </body>
     </html>
   );
